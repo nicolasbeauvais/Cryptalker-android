@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CrypTalker</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- activity_home -->
+    <string name="home_catch_phrase">A new kind of secure messaging app</string>
+    <string name="home_login">Login</string>
+    <string name="home_register">Register</string>
+    <!-- /activity_home -->
+
+    <!-- activity_login -->
+    <string name="login_header_title">LOGIN</string>
+    <string name="login_login">Login</string>
+    <string name="login_pseudo">Pseudo</string>
+    <string name="login_password">Password</string>
+    <string name="login_register">Register</string>
+    <!-- /activity_login -->
+
+    <!-- activity_create_account -->
+    <string name="create_account_header_title">REGISTER</string>
+    <string name="create_account_login">Login</string>
+    <string name="create_account_register">Register</string>
+    <string name="create_account_email">Email</string>
+    <string name="create_account_pseudo">Pseudo</string>
+    <string name="create_account_password">Password</string>
+    <string name="create_account_password_confirmation">Password confirmation</string>
+    <!-- /activity_create_account -->
+
+</resources>

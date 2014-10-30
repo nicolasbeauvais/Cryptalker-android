@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context=".HomeActivity"
+                style="@style/layout">
+
+    <include
+            android:id="@+id/_header"
+            layout="@layout/_header"
+            style="@style/include"/>
+
+    <RelativeLayout
+            style="@style/wrapper"
+            android:layout_below="@+id/_header">
+
+        <TextView
+                android:id="@+id/catch_phrase"
+                style="@style/catch_phrase"
+                android:text="@string/home_catch_phrase"/>
+
+        <Button
+                android:id="@+id/go_login"
+                android:hint="@string/home_login"
+                android:layout_below="@+id/catch_phrase"
+                style="@style/button"/>
+
+        <Button
+                android:id="@+id/go_register"
+                android:hint="@string/home_register"
+                android:layout_below="@+id/go_login"
+                style="@style/button"/>
+
+    </RelativeLayout>
+</RelativeLayout>
