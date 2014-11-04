@@ -3,60 +3,40 @@ package tk.cryptalker.model;
 public class User
 {
 
-    private Long userID;
+    private Long id;
+    private String email;
+    private String pseudo;
+    private String password;
 
-    private String userPseudo;
-
-    private String userHash;
-
-    private Long userCreationDate;
-
-    public Long getUserID()
-    {
-        return userID;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserID(Long userID)
-    {
-        this.userID = userID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUserPseudo()
-    {
-        return userPseudo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserPseudo(String userPseudo)
-    {
-        this.userPseudo = userPseudo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserHash()
-    {
-        return userHash;
+    public String getPseudo() {
+        return pseudo;
     }
 
-    public void setUserHash(String userHash)
-    {
-        this.userHash = userHash;
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
-    public Long getUserCreationDate()
-    {
-        return userCreationDate;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserCreationDate(Long userCreationDate)
-    {
-        this.userCreationDate = userCreationDate;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    @Override
-    public String toString()
-    {
-        return "User [userID=" + userID + ", userPseudo=" + userPseudo
-                + ", userHash=" + userHash + ", userCreationDate="
-                + userCreationDate + "]";
-    }
-
 }

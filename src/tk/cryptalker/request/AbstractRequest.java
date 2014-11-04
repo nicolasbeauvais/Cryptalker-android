@@ -14,7 +14,7 @@ import tk.cryptalker.manager.RequestManager;
 
 public class AbstractRequest extends JsonObjectRequest{
 
-    public static final String SERVER_URL = "http://serv.makki.us:11223/Chat/";
+    public static final String SERVER_URL = "https://cryptalker.tk/api/";
 
     protected static Context mContext;
 
@@ -48,5 +48,4 @@ public class AbstractRequest extends JsonObjectRequest{
     public void start(){
         CrypTalkerApplication.getInstance().addToRequestQueue(this, getRequestTag());
     }
-
 }

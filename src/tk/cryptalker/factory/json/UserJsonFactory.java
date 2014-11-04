@@ -22,10 +22,11 @@ public class UserJsonFactory {
         }
 
         JSONObject result = new JSONObject();
-        result.accumulate("userID", u.getUserID());
-        result.accumulate("userPseudo", u.getUserPseudo());
-        result.accumulate("userHash", u.getUserHash());
-        result.accumulate("userCreationDate", u.getUserCreationDate());
+        result.accumulate("id", u.getId());
+        result.accumulate("email", u.getEmail());
+        result.accumulate("pseudo", u.getPseudo());
+        result.accumulate("password", u.getPassword());
+
         return result;
     }
 
@@ -52,9 +53,9 @@ public class UserJsonFactory {
 
         User result = new User();
 
-        result.setUserCreationDate(json.getLong("userCreationDate"));
-        result.setUserID(json.getLong("userID"));
-        result.setUserPseudo(json.getString("userPseudo"));
+        result.setId(json.getLong("id"));
+        result.setEmail(json.getString("email"));
+        result.setPseudo(json.getString("pseudo"));
 
         return result;
     }

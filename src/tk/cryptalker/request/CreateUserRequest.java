@@ -13,7 +13,7 @@ import tk.cryptalker.model.User;
 
 public class CreateUserRequest extends AbstractRequest{
 
-    private static final String CREATE_USER = "create_new_user";
+    private static final String REST = "users/register";
 
     public CreateUserRequest(Context context, int method, User data, Listener<JSONObject> listener, ErrorListener errorListener) throws JSONException {
         super(context, method, constructUrl(), constructJSONObject(data), listener, errorListener);
@@ -24,13 +24,11 @@ public class CreateUserRequest extends AbstractRequest{
     }
 
     private static String constructUrl(){
-        return SERVER_URL + CREATE_USER;
+        return SERVER_URL + REST;
     }
 
     private static JSONObject constructJSONObject(User data) throws JSONException{
         JSONObject json = UserJsonFactory.getJSONObject(data);
         return json;
     }
-
-
 }

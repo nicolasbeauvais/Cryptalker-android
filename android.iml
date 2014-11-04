@@ -15,7 +15,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PullToRefreshListView" />
+    <orderEntry type="module" module-name="PullToRefreshListView" scope="PROVIDED" />
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" name="volley" level="project" />
   </component>
