@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.TextView;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -55,7 +56,9 @@ public class CreateAccountActivity extends AbstractActivity
             @Override
             public void onClick(View v) {
 
-                if (checkFields()){
+                TextView[] inputs = {userEmail, userPseudo, userPassword, userPasswordConfirmation};
+
+                if (validation(inputs)){
                     User user = fillValues();
                     createUser(user);
                 } else {
@@ -85,38 +88,14 @@ public class CreateAccountActivity extends AbstractActivity
         }
     }
 
-    protected User fillValues() {
+    protected User fillValues()
+    {
         User user = new User();
         user.setEmail(userEmail.getText().toString());
         user.setPseudo(userPseudo.getText().toString());
         user.setPassword(CryptoUtils.getHash(userPassword.getText().toString()));
 
         return user;
-    }
-
-    protected boolean checkFields() {
-        String email = userEmail.getText().toString();
-        String pseudo = userPseudo.getText().toString();
-        String password = userPassword.getText().toString();
-        String passwordConfirmation = userPasswordConfirmation.getText().toString();
-
-        if (email == null || email.length() == 0) {
-            return false;
-        }
-
-        if (pseudo == null || pseudo.length() == 0) {
-            return false;
-        }
-
-        if (password == null || password.length() == 0) {
-            return false;
-        }
-
-        if (passwordConfirmation == null || passwordConfirmation.length() == 0 || !password.equals(passwordConfirmation)) {
-            return false;
-        }
-
-        return true;
     }
 }
 

@@ -21,7 +21,7 @@
         <EditText
                 android:id="@+id/pseudo"
                 android:hint="@string/create_account_pseudo"
-                android:inputType="text"
+                android:inputType="textPersonName"
                 android:layout_below="@+id/email"
                 style="@style/input_text"/>
 

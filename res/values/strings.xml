@@ -8,6 +8,10 @@
     <string name="no_internet_connection">Failed to connect. Network is unreachable</string>
     <!-- /App Toast -->
 
+    <!-- Inputs validation -->
+    <string name="validation_input_required">This input is required</string>
+    <!-- /Inputs validation -->
+
     <!-- activity_home -->
     <string name="home_catch_phrase">A new kind of secure messaging app</string>
     <string name="home_login">Login</string>

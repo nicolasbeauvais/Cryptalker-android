@@ -3,6 +3,9 @@ package tk.cryptalker.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -44,5 +47,43 @@ public class AbstractActivity extends Activity
 
     public static Context getContext() {
         return context;
+    }
+
+    public boolean validation(TextView[] textViews)
+    {
+        // Reset validation
+        Boolean validated = true;
+
+        for (final TextView textView : textViews) {
+
+            // Reset Errors
+            textView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (textView.getText().length() > 0) {
+                        textView.setError(null);
+                    }
+                }
+            });
+
+
+            // Check
+            String content = textView.getText().toString();
+            if (content == null || content.length() == 0) {
+                textView.setError(Html.fromHtml("<font color='red'>"
+                        + getResources().getString(R.string.validation_input_required) + "</font>"));
+                validated = false;
+            }
+        }
+
+        return validated;
     }
 }
