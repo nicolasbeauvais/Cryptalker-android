@@ -9,9 +9,20 @@ import com.android.volley.toolbox.Volley;
 
 public class CrypTalkerApplication extends Application{
 
-    private static final String TAG = "SupChatApplication";
+    private static final String TAG = "CrypTalkerApplication";
 
     private RequestQueue mRequestQueue;
+
+    private static CrypTalkerApplication mInstance;
+
+    @Override
+    public void onCreate(){
+        mInstance = this;
+    }
+
+    public static synchronized CrypTalkerApplication getInstance() {
+        return mInstance;
+    }
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
