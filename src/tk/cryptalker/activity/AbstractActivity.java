@@ -1,4 +1,4 @@
-package tk.cryptalker;
+package tk.cryptalker.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import tk.cryptalker.R;
 
 public class AbstractActivity extends Activity
 {
