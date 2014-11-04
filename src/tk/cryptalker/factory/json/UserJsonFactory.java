@@ -26,6 +26,7 @@ public class UserJsonFactory {
         result.accumulate("email", u.getEmail());
         result.accumulate("pseudo", u.getPseudo());
         result.accumulate("password", u.getPassword());
+        result.accumulate("password_confirmation", u.getPasswordConfirmation());
 
         return result;
     }

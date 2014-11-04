@@ -17,7 +17,6 @@ import tk.cryptalker.R;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
-import tk.cryptalker.util.CryptoUtils;
 
 public class CreateAccountActivity extends AbstractActivity
 {
@@ -61,8 +60,6 @@ public class CreateAccountActivity extends AbstractActivity
                 if (validation(inputs)){
                     User user = fillValues();
                     createUser(user);
-                } else {
-                    Log.i(TAG, "fail");
                 }
             }
         });
@@ -74,7 +71,7 @@ public class CreateAccountActivity extends AbstractActivity
 
                 @Override
                 public void onResponse(Response response) {
-                    Log.i(TAG, "Response " + user.toString());
+                    Log.i(TAG, "Response " + response.getErrors().toString());
                 }
             }, new ErrorListener() {
 
@@ -93,7 +90,8 @@ public class CreateAccountActivity extends AbstractActivity
         User user = new User();
         user.setEmail(userEmail.getText().toString());
         user.setPseudo(userPseudo.getText().toString());
-        user.setPassword(CryptoUtils.getHash(userPassword.getText().toString()));
+        user.setPassword(userPassword.getText().toString());
+        user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
 
         return user;
     }

@@ -7,6 +7,7 @@ public class User
     private String email;
     private String pseudo;
     private String password;
+    private String password_confirmation;
 
     public Long getId() {
         return id;
@@ -38,6 +39,14 @@ public class User
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirmation() {
+        return password_confirmation;
+    }
+
+    public void setPasswordConfirmation(String password_confirmation) {
+        this.password_confirmation = password_confirmation;
     }
 
     @Override
