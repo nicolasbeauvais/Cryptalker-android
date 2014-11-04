@@ -14,7 +14,7 @@
 
         <EditText
                 android:id="@+id/email"
-                android:hint="@string/create_account_pseudo"
+                android:hint="@string/create_account_email"
                 android:inputType="textEmailAddress"
                 style="@style/input_text"/>
 
@@ -40,7 +40,7 @@
                 style="@style/input_text"/>
 
         <Button
-                android:id="@+id/submit"
+                android:id="@+id/create_account_submit"
                 android:hint="@string/create_account_register"
                 android:layout_below="@+id/password_confirmation"
                 style="@style/button"/>
@@ -48,7 +48,7 @@
         <Button
                 android:id="@+id/go_login"
                 android:hint="@string/create_account_login"
-                android:layout_below="@+id/submit"
+                android:layout_below="@+id/create_account_submit"
                 style="@style/button"/>
 
     </RelativeLayout>
