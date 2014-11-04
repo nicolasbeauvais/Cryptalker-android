@@ -5,11 +5,10 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import tk.cryptalker.model.Response;
-import tk.cryptalker.model.ResponseCode;
 
 public class ResponseJsonFactory {
 
-    private static final String TAG = "TokenJsonFactory";
+    private static final String TAG = "ResponseJsonFactory";
 
     public static JSONObject getJSONObject(Response r) throws JSONException{
 
@@ -19,8 +18,9 @@ public class ResponseJsonFactory {
         }
 
         JSONObject result = new JSONObject();
-        result.accumulate("code", r.getCode());
-        result.accumulate("status", r.getStatus());
+        result.accumulate("data", r.getData());
+        result.accumulate("success", r.isSuccess());
+        result.accumulate("errors", r.getErrors());
         return result;
     }
 
@@ -33,8 +33,9 @@ public class ResponseJsonFactory {
 
         Response result = new Response();
 
-        result.setCode(ResponseCode.valueOf(json.getString("code")));
-        result.setStatus(json.getString("status"));
+        result.setData(json.getJSONArray("data"));
+        result.setSuccess(json.getBoolean("success"));
+        result.setErrors(json.getJSONObject("errors"));
 
         return result;
     }

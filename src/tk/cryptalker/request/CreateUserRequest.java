@@ -1,5 +1,7 @@
 package tk.cryptalker.request;
 
+import android.util.Log;
+import com.android.volley.Request;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,19 +13,16 @@ import com.android.volley.Response.Listener;
 import tk.cryptalker.factory.json.UserJsonFactory;
 import tk.cryptalker.model.User;
 
-public class CreateUserRequest extends AbstractRequest{
+public class CreateUserRequest extends AbstractRequest {
 
     private static final String REST = "users/register";
 
-    public CreateUserRequest(Context context, int method, User data, Listener<JSONObject> listener, ErrorListener errorListener) throws JSONException {
-        super(context, method, constructUrl(), constructJSONObject(data), listener, errorListener);
-    }
-
     public CreateUserRequest(Context context, User data, Listener<JSONObject> listener, ErrorListener errorListener) throws JSONException {
-        super(context,constructUrl(), constructJSONObject(data), listener, errorListener);
+        super(context, Request.Method.POST, constructUrl(), constructJSONObject(data), listener, errorListener);
     }
 
     private static String constructUrl(){
+        Log.i("URL", SERVER_URL + REST);
         return SERVER_URL + REST;
     }
 

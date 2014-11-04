@@ -11,8 +11,6 @@ public class HomeActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        context = getApplicationContext();
-
         makeLayout(R.layout.activity_home, R.string.app_name);
 
         attachPageChange(R.id.go_register, CreateAccountActivity.class);

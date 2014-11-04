@@ -4,6 +4,10 @@
     <string name="app_name">CrypTalker</string>
     <string name="action_settings">Settings</string>
 
+    <!-- App Toast -->
+    <string name="no_internet_connection">Failed to connect. Network is unreachable</string>
+    <!-- /App Toast -->
+
     <!-- activity_home -->
     <string name="home_catch_phrase">A new kind of secure messaging app</string>
     <string name="home_login">Login</string>

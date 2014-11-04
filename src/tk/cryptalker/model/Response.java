@@ -1,5 +1,6 @@
 package tk.cryptalker.model;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,20 +10,12 @@ public class Response {
 
     protected static final String TAG = "Response";
 
-    private String status;
+    private JSONArray  data;
+    private boolean success;
+    private JSONObject errors;
 
-    private ResponseCode code;
-
-    public Response(){
-    }
-
-    public Response(String status, ResponseCode code) {
-        super();
-        this.status = status;
-        this.code = code;
-    }
-
-    public static Response parseFromJSONObject(Response r, JSONObject json) throws JSONException{
+    public static Response parseFromJSONObject(Response r, JSONObject json) throws JSONException
+    {
 
         if (json == null){
             Log.e(TAG, "Unable to create Response from Json caused by json null");
@@ -34,13 +27,12 @@ public class Response {
             return null;
         }
 
-        r.setStatus(json.getString("status"));
-        r.setCode(ResponseCode.valueOf(ResponseCode.class, json.getString("code")));
-
+        r.setSuccess(json.getBoolean("success"));
         return r;
     }
 
-    public static Response parseFromJSONObject(JSONObject json) throws JSONException{
+    public static Response parseFromJSONObject(JSONObject json) throws JSONException
+    {
 
         if (json == null){
             Log.e(TAG, "Unable to create Response from Json caused by json null");
@@ -49,59 +41,34 @@ public class Response {
 
         Response r = new Response();
 
-        r.setStatus(json.getString("status"));
-        r.setCode(ResponseCode.valueOf(json.getString("code")));
+        r.setData(json.getJSONArray("data"));
+        r.setSuccess(json.getBoolean("success"));
+        r.setErrors(json.getJSONObject("errors"));
 
         return r;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((code == null) ? 0 : code.hashCode());
-        result = prime * result + ((status == null) ? 0 : status.hashCode());
-        return result;
+    public JSONArray getData() {
+        return data;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Response other = (Response) obj;
-        if (code != other.code)
-            return false;
-        if (status == null) {
-            if (other.status != null)
-                return false;
-        } else if (!status.equals(other.status))
-            return false;
-        return true;
+    public void setData(JSONArray data) {
+        this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return "Response [status=" + status + ", code=" + code + "]";
+    public boolean isSuccess() {
+        return success;
     }
 
-    public String getStatus() {
-        return status;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public JSONObject getErrors() {
+        return errors;
     }
 
-    public ResponseCode getCode() {
-        return code;
+    public void setErrors(JSONObject  errors) {
+        this.errors = errors;
     }
-
-    public void setCode(ResponseCode code) {
-        this.code = code;
-    }
-
 }

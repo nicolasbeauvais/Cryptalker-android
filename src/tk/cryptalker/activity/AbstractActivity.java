@@ -11,10 +11,11 @@ import tk.cryptalker.R;
 
 public class AbstractActivity extends Activity
 {
-    Context context;
+    static Context context;
 
     public void makeLayout(int layout, int title)
     {
+        context = getApplicationContext();
         setContentView(layout);
 
         TextView headerTitle = (TextView)findViewById(R.id._header_title);
@@ -39,5 +40,9 @@ public class AbstractActivity extends Activity
                 }
             }
         };
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

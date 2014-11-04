@@ -13,7 +13,8 @@
     <application
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
-            android:allowBackup="true">
+            android:allowBackup="true"
+            android:name=".application.CrypTalkerApplication">
 
         <activity android:name=".activity.HomeActivity"
                   android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"

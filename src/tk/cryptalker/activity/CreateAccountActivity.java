@@ -1,6 +1,5 @@
 package tk.cryptalker.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,8 +34,6 @@ public class CreateAccountActivity extends AbstractActivity
     {
         super.onCreate(saveInstanceState);
 
-        context = getApplicationContext();
-        
         makeLayout(R.layout.activity_create_account, R.string.create_account_header_title);
 
         attachPageChange(R.id.go_login, LoginActivity.class);
@@ -62,25 +59,25 @@ public class CreateAccountActivity extends AbstractActivity
                     User user = fillValues();
                     createUser(user);
                 } else {
-                    Log.i(TAG, "Register fail");
+                    Log.i(TAG, "fail");
                 }
             }
         });
     }
 
-    private void createUser(User user){
+    private void createUser(final User user){
         try {
             RequestManager.getInstance(CreateAccountActivity.this).createUser(user, new Listener<Response>() {
 
                 @Override
                 public void onResponse(Response response) {
-                    Log.i(TAG, "Response " + response);
+                    Log.i(TAG, "Response " + user.toString());
                 }
             }, new ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.i(TAG, "Error during the request");
+                    Log.i(TAG, "Error during the request => " + error.toString());
                 }
             });
         } catch (JSONException e) {
