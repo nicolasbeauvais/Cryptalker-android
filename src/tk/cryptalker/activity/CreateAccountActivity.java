@@ -1,6 +1,7 @@
-package tk.cryptalker;
+package tk.cryptalker.activity;
 
 import android.os.Bundle;
+import tk.cryptalker.R;
 
 public class CreateAccountActivity extends AbstractActivity
 {

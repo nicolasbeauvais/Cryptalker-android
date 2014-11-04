@@ -28,5 +28,8 @@ proguard/
 # Log Files
 *.log
 
+# external_libs
+external_libs/
+
 #IDE
 .idea/

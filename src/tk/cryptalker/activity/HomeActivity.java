@@ -1,12 +1,14 @@
-package tk.cryptalker;
+package tk.cryptalker.activity;
 
 import android.os.Bundle;
+import tk.cryptalker.R;
 
 public class HomeActivity extends AbstractActivity
 {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
