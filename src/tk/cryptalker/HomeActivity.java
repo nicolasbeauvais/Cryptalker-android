@@ -7,6 +7,7 @@ public class HomeActivity extends AbstractActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
