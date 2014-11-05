@@ -18,6 +18,9 @@ import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CreateAccountActivity extends AbstractActivity
 {
     private static final String TAG = "CreateAccountActivity";
@@ -26,6 +29,8 @@ public class CreateAccountActivity extends AbstractActivity
     private EditText userPseudo;
     private EditText userPassword;
     private EditText userPasswordConfirmation;
+
+    private ArrayList<TextView> inputs = new ArrayList<TextView>();
 
     private Button createAccountSubmit;
 
@@ -48,14 +53,14 @@ public class CreateAccountActivity extends AbstractActivity
         userPassword = (EditText)findViewById(R.id.password);
         userPasswordConfirmation = (EditText)findViewById(R.id.password_confirmation);
 
-        createAccountSubmit = (Button) findViewById(R.id.create_account_submit);
+        // Set Inputs
+        inputs.addAll(Arrays.asList(userEmail, userPseudo, userPassword, userPasswordConfirmation));
 
+        createAccountSubmit = (Button) findViewById(R.id.create_account_submit);
         createAccountSubmit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-                TextView[] inputs = {userEmail, userPseudo, userPassword, userPasswordConfirmation};
 
                 if (validation(inputs)){
                     User user = fillValues();
@@ -71,7 +76,16 @@ public class CreateAccountActivity extends AbstractActivity
 
                 @Override
                 public void onResponse(Response response) {
-                    Log.i(TAG, "Response " + response.getErrors().toString());
+
+                    if (response.isSuccess()) {
+                        //@ TODO: auto connect user (API must return access token)
+                        Log.i(TAG, "REGISTER SUCCESS");
+                    } else {
+
+                        if (response.getErrors().length() > 0) {
+                            parseJsonErrors(response.getErrors());
+                        }
+                    }
                 }
             }, new ErrorListener() {
 
