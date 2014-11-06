@@ -2,6 +2,7 @@ package tk.cryptalker.activity;
 
 import android.os.Bundle;
 import tk.cryptalker.R;
+import tk.cryptalker.application.CrypTalkerApplication;
 
 public class HomeActivity extends AbstractActivity
 {
