@@ -1,20 +1,14 @@
 package tk.cryptalker.application;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
-import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import tk.cryptalker.R;
 
 public class CrypTalkerApplication extends Application{
 
@@ -23,8 +17,6 @@ public class CrypTalkerApplication extends Application{
     private RequestQueue mRequestQueue;
 
     private static CrypTalkerApplication mInstance;
-
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     public void onCreate()
