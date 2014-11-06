@@ -48,6 +48,7 @@ public class CreateAccountActivity extends AbstractActivity
 
     private void initViews()
     {
+        // Initialise inputs
         userEmail = (EditText)findViewById(R.id.email);
         userPseudo = (EditText)findViewById(R.id.pseudo);
         userPassword = (EditText)findViewById(R.id.password);
@@ -56,6 +57,7 @@ public class CreateAccountActivity extends AbstractActivity
         // Set Inputs
         inputs.addAll(Arrays.asList(userEmail, userPseudo, userPassword, userPasswordConfirmation));
 
+        // Form submit action listener
         createAccountSubmit = (Button) findViewById(R.id.create_account_submit);
         createAccountSubmit.setOnClickListener(new View.OnClickListener() {
 
@@ -63,11 +65,23 @@ public class CreateAccountActivity extends AbstractActivity
             public void onClick(View v) {
 
                 if (validation(inputs)){
+
                     User user = fillValues();
                     createUser(user);
                 }
             }
         });
+    }
+
+    private User fillValues()
+    {
+        User user =  new User();
+        user.setEmail(userEmail.getText().toString());
+        user.setPseudo(userPseudo.getText().toString());
+        user.setPassword(userPassword.getText().toString());
+        user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
+
+        return user;
     }
 
     private void createUser(final User user){
@@ -79,6 +93,7 @@ public class CreateAccountActivity extends AbstractActivity
 
                     if (response.isSuccess()) {
                         //@ TODO: auto connect user (API must return access token)
+
                         Log.i(TAG, "REGISTER SUCCESS");
                     } else {
 
@@ -98,16 +113,4 @@ public class CreateAccountActivity extends AbstractActivity
             Log.e(TAG, "Error executing request " + e.getMessage(), e);
         }
     }
-
-    protected User fillValues()
-    {
-        User user = new User();
-        user.setEmail(userEmail.getText().toString());
-        user.setPseudo(userPseudo.getText().toString());
-        user.setPassword(userPassword.getText().toString());
-        user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
-
-        return user;
-    }
 }
-

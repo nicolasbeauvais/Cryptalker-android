@@ -60,7 +60,6 @@ public class RequestManager {
                 Response response = null;
                 try {
                     response = Response.parseFromJSONObject(arg0);
-                    Log.i("ANSWER", response.toString());
                 } catch (JSONException e) {
                     Log.e(TAG, "An error occurred parsing create user response", e);
                 }

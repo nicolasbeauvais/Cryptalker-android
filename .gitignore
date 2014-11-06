@@ -33,3 +33,6 @@ external_libs/
 
 #IDE
 .idea/
+
+#Personal
+project.properties
