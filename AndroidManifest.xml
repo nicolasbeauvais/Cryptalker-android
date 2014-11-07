@@ -60,5 +60,6 @@
                 android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
                 android:name=".activity.CreateAccountActivity">
         </activity>
+        <activity android:name=".activity.DashboardActivity"/>
     </application>
 </manifest>

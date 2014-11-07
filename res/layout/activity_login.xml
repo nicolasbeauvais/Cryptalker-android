@@ -14,7 +14,7 @@
 
         <EditText
                 android:id="@+id/login"
-                android:hint="@string/login_pseudo"
+                android:hint="@string/login_pseudo_or_email"
                 android:inputType="text"
                 style="@style/input_text"/>
 
@@ -26,7 +26,7 @@
                 style="@style/input_text"/>
 
         <Button
-                android:id="@+id/submit"
+                android:id="@+id/login_submit"
                 android:hint="@string/login_login"
                 android:layout_below="@+id/password"
                 style="@style/button"/>
@@ -34,7 +34,7 @@
         <Button
                 android:id="@+id/go_register"
                 android:hint="@string/login_register"
-                android:layout_below="@+id/submit"
+                android:layout_below="@+id/login_submit"
                 style="@style/button"/>
     </RelativeLayout>
 </RelativeLayout>

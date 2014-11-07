@@ -27,6 +27,7 @@
     <string name="login_header_title">LOGIN</string>
     <string name="login_login">Login</string>
     <string name="login_pseudo">Pseudo</string>
+    <string name="login_pseudo_or_email">Pseudo or Email</string>
     <string name="login_password">Password</string>
     <string name="login_register">Register</string>
     <!-- /activity_login -->
@@ -41,4 +42,7 @@
     <string name="create_account_password_confirmation">Password confirmation</string>
     <!-- /activity_create_account -->
 
+    <!-- activity_dashboard -->
+    <string name="dashboard_catch_phrase">Welcome to CrypTalker Dude !</string>
+    <!-- activity_dashboard -->
 </resources>

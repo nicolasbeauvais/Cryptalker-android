@@ -21,15 +21,7 @@ public class UserJsonFactory {
             return null;
         }
 
-        JSONObject result = new JSONObject();
-        result.accumulate("id", u.getId());
-        result.accumulate("email", u.getEmail());
-        result.accumulate("pseudo", u.getPseudo());
-        result.accumulate("password", u.getPassword());
-        result.accumulate("password_confirmation", u.getPasswordConfirmation());
-        result.accumulate("mobile_id", u.getMobileId());
-
-        return result;
+        return u.toJSON();
     }
 
     public static JSONArray getJSONArray(ArrayList<User> users) throws JSONException

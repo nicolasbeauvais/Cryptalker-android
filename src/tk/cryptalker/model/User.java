@@ -1,6 +1,8 @@
 package tk.cryptalker.model;
 
 import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class User
     private String pseudo;
     private String password;
     private String password_confirmation;
+    private String pseudoOrEmail;
     private String mobile_id;
     private String token;
 
@@ -71,6 +74,14 @@ public class User
         this.token = token;
     }
 
+    public String getLogin() {
+        return pseudoOrEmail;
+    }
+
+    public void setLogin(String pseudoOrEmail) {
+        this.pseudoOrEmail = pseudoOrEmail;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -78,6 +89,29 @@ public class User
                 ", email='" + email + '\'' +
                 ", pseudo='" + pseudo + '\'' +
                 ", password='" + password + '\'' +
+                ", password_confirmation='" + password_confirmation + '\'' +
+                ", pseudoOrEmail='" + pseudoOrEmail + '\'' +
+                ", mobile_id='" + mobile_id + '\'' +
+                ", token='" + token + '\'' +
                 '}';
+    }
+
+    public JSONObject toJSON(){
+
+        JSONObject j= new JSONObject();
+        try {
+            j.accumulate("id", getId());
+            j.accumulate("email", getEmail());
+            j.accumulate("pseudo", getPseudo());
+            j.accumulate("password", getPassword());
+            j.accumulate("password_confirmation", getPasswordConfirmation());
+            j.accumulate("pseudoOrEmail", getLogin());
+            j.accumulate("mobile_id", getMobileId());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return j;
     }
 }

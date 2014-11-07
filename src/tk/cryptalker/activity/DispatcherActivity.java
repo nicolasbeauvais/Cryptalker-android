@@ -4,16 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import org.json.JSONException;
 import tk.cryptalker.R;
+import tk.cryptalker.manager.RequestManager;
+import tk.cryptalker.model.Response;
+import tk.cryptalker.model.User;
 
 import java.io.IOException;
 
 public class DispatcherActivity extends AbstractActivity
 {
+    private static final String TAG = "DispatcherActivity";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     String SENDER_ID = "596702755873";
@@ -39,9 +47,18 @@ public class DispatcherActivity extends AbstractActivity
             if (regId.isEmpty()) {
                 registerInBackground();
             } else {
-                Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+
+                String token = getToken();
+
+                // If has token, attempt a login
+                if (!token.isEmpty()) {
+                    User user = fillValues();
+                    loginWithTokenUser(user);
+                } else {
+                    Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
 
         } else {
@@ -119,4 +136,48 @@ public class DispatcherActivity extends AbstractActivity
         super.onDestroy();
     }
 
+    private User fillValues()
+    {
+        User user =  new User();
+        user.setToken(getToken());
+
+        return user;
+    }
+
+    private void loginWithTokenUser(final User user){
+        try {
+            RequestManager.getInstance(DispatcherActivity.this).loginWithTokenUser(user, new Listener<Response>() {
+
+                @Override
+                public void onResponse(Response response) {
+
+                    if (response.isSuccess()) {
+
+                        try {
+                            storeToken(response.getData().getString("token"));
+
+                            Intent intent = new Intent(DispatcherActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        } catch (JSONException e) {
+                            Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
+                        }
+                    } else {
+                        Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                }
+            }, new com.android.volley.Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i(TAG, "Error during the request => " + error.toString());
+                }
+            });
+        } catch (JSONException e) {
+            Log.e(TAG, "Error executing request " + e.getMessage(), e);
+        }
+    }
 }

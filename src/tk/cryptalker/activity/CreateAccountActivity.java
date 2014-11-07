@@ -1,5 +1,6 @@
 package tk.cryptalker.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -96,23 +97,20 @@ public class CreateAccountActivity extends AbstractActivity
 
                         try {
                             storeToken(response.getData().getString("token"));
-                            Log.i(TAG, getToken());
 
-                            Log.i(TAG, "REGISTERED");
+                            Intent intent = new Intent(CreateAccountActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
                         } catch (JSONException e) {
                             Log.i(TAG, "JSON Exception on user create return parsing");
                         }
-
-                        Log.i(TAG, "What ?");
-
                     } else {
 
                         if (response.getErrors().length() > 0) {
                             parseJsonErrors(response.getErrors());
                         }
                     }
-
-                    Log.i(TAG, "END");
                 }
             }, new ErrorListener() {
 
