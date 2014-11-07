@@ -12,6 +12,8 @@ public class User
     private String pseudo;
     private String password;
     private String password_confirmation;
+    private String mobile_id;
+    private String token;
 
     public Long getId() {
         return id;
@@ -51,6 +53,22 @@ public class User
 
     public void setPasswordConfirmation(String password_confirmation) {
         this.password_confirmation = password_confirmation;
+    }
+
+    public String getMobileId() {
+        return mobile_id;
+    }
+
+    public void setMobileId(String mobile_id) {
+        this.mobile_id = mobile_id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

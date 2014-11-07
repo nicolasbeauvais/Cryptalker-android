@@ -80,6 +80,7 @@ public class CreateAccountActivity extends AbstractActivity
         user.setPseudo(userPseudo.getText().toString());
         user.setPassword(userPassword.getText().toString());
         user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
+        user.setMobileId(getRegistrationId(context));
 
         return user;
     }
@@ -92,15 +93,26 @@ public class CreateAccountActivity extends AbstractActivity
                 public void onResponse(Response response) {
 
                     if (response.isSuccess()) {
-                        //@ TODO: auto connect user (API must return access token)
 
-                        Log.i(TAG, "REGISTER SUCCESS");
+                        try {
+                            storeToken(response.getData().getString("token"));
+                            Log.i(TAG, getToken());
+
+                            Log.i(TAG, "REGISTERED");
+                        } catch (JSONException e) {
+                            Log.i(TAG, "JSON Exception on user create return parsing");
+                        }
+
+                        Log.i(TAG, "What ?");
+
                     } else {
 
                         if (response.getErrors().length() > 0) {
                             parseJsonErrors(response.getErrors());
                         }
                     }
+
+                    Log.i(TAG, "END");
                 }
             }, new ErrorListener() {
 

@@ -10,7 +10,7 @@ public class Response {
 
     protected static final String TAG = "Response";
 
-    private JSONArray  data;
+    private JSONObject  data;
     private boolean success;
     private JSONObject errors;
 
@@ -41,18 +41,18 @@ public class Response {
 
         Response r = new Response();
 
-        r.setData(json.getJSONArray("data"));
+        r.setData(json.getJSONObject("data"));
         r.setSuccess(json.getBoolean("success"));
         r.setErrors(json.getJSONObject("errors"));
 
         return r;
     }
 
-    public JSONArray getData() {
+    public JSONObject getData() {
         return data;
     }
 
-    public void setData(JSONArray data) {
+    public void setData(JSONObject data) {
         this.data = data;
     }
 

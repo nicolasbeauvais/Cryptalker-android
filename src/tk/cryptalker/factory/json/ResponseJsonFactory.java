@@ -33,7 +33,7 @@ public class ResponseJsonFactory {
 
         Response result = new Response();
 
-        result.setData(json.getJSONArray("data"));
+        result.setData(json.getJSONObject("data"));
         result.setSuccess(json.getBoolean("success"));
         result.setErrors(json.getJSONObject("errors"));
 
