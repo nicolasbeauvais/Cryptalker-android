@@ -121,13 +121,6 @@ public class DispatcherActivity extends AbstractActivity
 
                 return msg;
             }
-
-            @Override
-            protected void onPostExecute(String msg) {
-                Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
         }.execute(null, null, null);
     }
 
@@ -139,6 +132,7 @@ public class DispatcherActivity extends AbstractActivity
     private User fillValues()
     {
         User user =  new User();
+        user.setMobileId(getRegistrationId(context));
         user.setToken(getToken());
 
         return user;

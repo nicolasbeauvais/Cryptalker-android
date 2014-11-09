@@ -33,7 +33,6 @@ public class Response {
 
     public static Response parseFromJSONObject(JSONObject json) throws JSONException
     {
-
         if (json == null){
             Log.e(TAG, "Unable to create Response from Json caused by json null");
             return null;

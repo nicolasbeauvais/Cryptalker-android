@@ -107,6 +107,7 @@ public class User
             j.accumulate("password_confirmation", getPasswordConfirmation());
             j.accumulate("pseudoOrEmail", getLogin());
             j.accumulate("mobile_id", getMobileId());
+            j.accumulate("token", getToken());
 
         } catch (JSONException e) {
             e.printStackTrace();
