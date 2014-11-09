@@ -34,7 +34,7 @@ public class DispatcherActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_dispatcher, R.string.app_name);
+        makeLayout(R.layout.activity_dispatcher, R.string.app_name, R.menu.empty);
 
         context = getApplicationContext();
 

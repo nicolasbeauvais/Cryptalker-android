@@ -34,7 +34,7 @@ public class LoginActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_login, R.string.login_header_title);
+        makeLayout(R.layout.activity_login, R.string.login_header_title, R.menu.empty);
 
         attachPageChange(R.id.go_register, CreateAccountActivity.class);
 

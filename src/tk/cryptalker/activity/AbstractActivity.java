@@ -3,6 +3,8 @@ package tk.cryptalker.activity;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import tk.cryptalker.R;
 
 import android.app.Activity;
@@ -20,7 +22,6 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import tk.cryptalker.model.User;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,13 +34,27 @@ public class AbstractActivity extends Activity
     public static final String PROPERTY_TOKEN = "token";
     private static final String PROPERTY_APP_VERSION = "appVersion";
 
-    public void makeLayout(int layout, int title)
+    private int menu;
+
+    public void makeLayout(int layout, int title, int menu)
     {
         context = getApplicationContext();
         setContentView(layout);
 
-        TextView headerTitle = (TextView)findViewById(R.id._header_title);
-        headerTitle.setText(title);
+        setTitle(context.getString(title));
+
+        this.menu = menu;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(this.menu, menu);
+
+        getActionBar().setIcon(R.drawable.ic_drawer);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     public void attachPageChange(int element, Class destination)

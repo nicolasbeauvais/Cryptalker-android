@@ -40,7 +40,7 @@ public class CreateAccountActivity extends AbstractActivity
     {
         super.onCreate(saveInstanceState);
 
-        makeLayout(R.layout.activity_create_account, R.string.create_account_header_title);
+        makeLayout(R.layout.activity_create_account, R.string.create_account_header_title, R.menu.empty);
 
         attachPageChange(R.id.go_login, LoginActivity.class);
 

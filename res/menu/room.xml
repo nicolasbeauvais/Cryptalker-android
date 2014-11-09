@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      android:theme="@style/menu">
+
+    <item android:id="@+id/new_friend_request"
+          android:icon="@drawable/ic_action_add_group"
+          android:title="@string/action_add_person_to_room"
+          android:showAsAction="ifRoom"/>
+
+</menu>

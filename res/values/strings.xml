@@ -2,16 +2,28 @@
 <resources>
 
     <string name="app_name">CrypTalker</string>
-    <string name="action_settings">Settings</string>
 
     <!-- App Toast -->
     <string name="no_internet_connection">Failed to connect. Network is unreachable</string>
     <string name="no_apk">You need to install Android Google Play</string>
     <!-- /App Toast -->
 
+    <!-- Dialog add friend -->
+    <string name="dialog_add_friend_title">Add friend</string>
+    <string name="dialog_add_friend_pseudo">Pseudo</string>
+    <string name="dialog_add_friend_positive_button">Add</string>
+    <string name="dialog_add_friend_negative_button">Cancel</string>
+    <!-- /Dialog -->
+
     <!-- Inputs validation -->
     <string name="validation_input_required">This input is required</string>
     <!-- /Inputs validation -->
+
+    <!-- Action Bar -->
+    <string name="action_add_person">New friend request</string>
+    <string name="action_chat">New friend request</string>
+    <string name="action_add_person_to_room">Add a friend to the chat</string>
+    <!-- /Action Bar -->
 
     <!-- activity_dispatcher -->
     <string name="dispatcher_loading">Loading...</string>
@@ -43,6 +55,7 @@
     <!-- /activity_create_account -->
 
     <!-- activity_dashboard -->
+    <string name="dashboard_title">CONTACTS</string>
     <string name="dashboard_catch_phrase">Welcome to CrypTalker Dude !</string>
     <!-- activity_dashboard -->
 </resources>

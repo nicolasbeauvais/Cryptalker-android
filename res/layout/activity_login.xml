@@ -3,38 +3,28 @@
                 tools:context=".LoginActivity"
                 style="@style/layout">
 
-    <include
-            android:id="@+id/_header"
-            layout="@layout/_header"
-            style="@style/include"/>
+    <EditText
+            android:id="@+id/login"
+            android:hint="@string/login_pseudo_or_email"
+            android:inputType="text"
+            style="@style/input_text"/>
 
-    <RelativeLayout
-            style="@style/wrapper"
-            android:layout_below="@+id/_header">
+    <EditText
+            android:id="@+id/password"
+            android:layout_below="@+id/login"
+            android:hint="@string/login_password"
+            android:inputType="textPassword"
+            style="@style/input_text"/>
 
-        <EditText
-                android:id="@+id/login"
-                android:hint="@string/login_pseudo_or_email"
-                android:inputType="text"
-                style="@style/input_text"/>
+    <Button
+            android:id="@+id/login_submit"
+            android:hint="@string/login_login"
+            android:layout_below="@+id/password"
+            style="@style/button"/>
 
-        <EditText
-                android:id="@+id/password"
-                android:layout_below="@+id/login"
-                android:hint="@string/login_password"
-                android:inputType="textPassword"
-                style="@style/input_text"/>
-
-        <Button
-                android:id="@+id/login_submit"
-                android:hint="@string/login_login"
-                android:layout_below="@+id/password"
-                style="@style/button"/>
-
-        <Button
-                android:id="@+id/go_register"
-                android:hint="@string/login_register"
-                android:layout_below="@+id/login_submit"
-                style="@style/button"/>
-    </RelativeLayout>
+    <Button
+            android:id="@+id/go_register"
+            android:hint="@string/login_register"
+            android:layout_below="@+id/login_submit"
+            style="@style/button"/>
 </RelativeLayout>

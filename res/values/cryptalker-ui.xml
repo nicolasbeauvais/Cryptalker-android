@@ -6,33 +6,24 @@
     <color name="light_grey">#aaaaaa</color>
     <!-- /Attributes -->
 
-    <!-- Partial Header -->
-    <style name="header_container">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">60dp</item>
-        <item name="android:background">#eee</item>
-        <item name="android:minHeight">50dp</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_marginBottom">20dp</item>
+    <!-- Holo Theme Override -->
+    <style name="Cryptalker"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/actionBar</item>
     </style>
 
-    <style name="header_title">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:textSize">30sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/main</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
+    <style name="actionBar"
+           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/main</item>
     </style>
-    <!-- /Partial Header -->
+    <!-- /Holo Theme Override -->
 
-    <!-- Include -->
-    <style name="include">
+    <!-- Menu -->
+    <style name="menu">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_alignParentTop">true</item>
     </style>
-    <!-- /Include -->
+    <!-- /Menu -->
 
     <!-- Page Wrapper -->
     <style name="layout">
@@ -73,6 +64,28 @@
         <item name="android:background">@drawable/rounded_button</item>
     </style>
     <!-- /General -->
+
+    <!-- Dialog -->
+    <style name="dialog_header">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/main</item>
+        <item name="android:minHeight">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="dialog_box">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+    <!-- /Dialog -->
 
     <!-- Home -->
     <style name="catch_phrase">

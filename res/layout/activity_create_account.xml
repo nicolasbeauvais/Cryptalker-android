@@ -3,53 +3,43 @@
                 tools:context=".CreateAccountActivity"
                 style="@style/layout">
 
-    <include
-            android:id="@+id/_header"
-            layout="@layout/_header"
-            style="@style/include"/>
+    <EditText
+            android:id="@+id/email"
+            android:hint="@string/create_account_email"
+            android:inputType="textEmailAddress"
+            style="@style/input_text"/>
 
-    <RelativeLayout
-            style="@style/wrapper"
-            android:layout_below="@+id/_header">
+    <EditText
+            android:id="@+id/pseudo"
+            android:hint="@string/create_account_pseudo"
+            android:inputType="textPersonName"
+            android:layout_below="@+id/email"
+            style="@style/input_text"/>
 
-        <EditText
-                android:id="@+id/email"
-                android:hint="@string/create_account_email"
-                android:inputType="textEmailAddress"
-                style="@style/input_text"/>
+    <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:layout_below="@+id/pseudo"
+            android:hint="@string/create_account_password"
+            style="@style/input_text"/>
 
-        <EditText
-                android:id="@+id/pseudo"
-                android:hint="@string/create_account_pseudo"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/email"
-                style="@style/input_text"/>
+    <EditText
+            android:id="@+id/password_confirmation"
+            android:inputType="textPassword"
+            android:layout_below="@+id/password"
+            android:hint="@string/create_account_password_confirmation"
+            style="@style/input_text"/>
 
-        <EditText
-                android:id="@+id/password"
-                android:inputType="textPassword"
-                android:layout_below="@+id/pseudo"
-                android:hint="@string/create_account_password"
-                style="@style/input_text"/>
+    <Button
+            android:id="@+id/create_account_submit"
+            android:hint="@string/create_account_register"
+            android:layout_below="@+id/password_confirmation"
+            style="@style/button"/>
 
-        <EditText
-                android:id="@+id/password_confirmation"
-                android:inputType="textPassword"
-                android:layout_below="@+id/password"
-                android:hint="@string/create_account_password_confirmation"
-                style="@style/input_text"/>
+    <Button
+            android:id="@+id/go_login"
+            android:hint="@string/create_account_login"
+            android:layout_below="@+id/create_account_submit"
+            style="@style/button"/>
 
-        <Button
-                android:id="@+id/create_account_submit"
-                android:hint="@string/create_account_register"
-                android:layout_below="@+id/password_confirmation"
-                style="@style/button"/>
-
-        <Button
-                android:id="@+id/go_login"
-                android:hint="@string/create_account_login"
-                android:layout_below="@+id/create_account_submit"
-                style="@style/button"/>
-
-    </RelativeLayout>
 </RelativeLayout>

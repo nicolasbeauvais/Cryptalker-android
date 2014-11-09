@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/layout">
+
+    <TextView
+            android:id="@+id/dialog_header"
+            style="@style/dialog_header"
+            android:text="@string/dialog_add_friend_title"/>
+
+    <RelativeLayout
+            style="@style/dialog_box"
+            android:layout_below="@+id/dialog_header">
+
+        <EditText
+                android:id="@+id/pseudo"
+                android:inputType="textPersonName"
+                android:hint="@string/dialog_add_friend_pseudo"
+                style="@style/input_text"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

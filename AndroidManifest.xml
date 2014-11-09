@@ -21,7 +21,8 @@
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
             android:allowBackup="true"
-            android:name=".application.CrypTalkerApplication">
+            android:name=".application.CrypTalkerApplication"
+            android:theme="@style/Cryptalker">
 
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
@@ -35,34 +36,24 @@
                 <category android:name="tk.cryptalker" />
             </intent-filter>
         </receiver>
+
         <service android:name=".gcm.GcmIntentService" />
 
         <activity android:name=".activity.DispatcherActivity"
-                  android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity
-                android:name=".activity.HomeActivity"
-                android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-        </activity>
+        <activity android:name=".activity.HomeActivity" />
 
-        <activity
-                android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-                android:name=".activity.LoginActivity">
-        </activity>
+        <activity android:name=".activity.LoginActivity" />
 
-        <activity
-                android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-                android:name=".activity.CreateAccountActivity">
-        </activity>
-        <activity
-                android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-                android:name=".activity.DashboardActivity">
-        </activity>
+        <activity android:name=".activity.CreateAccountActivity" />
+
+        <activity android:name=".activity.DashboardActivity" />
     </application>
 </manifest>
