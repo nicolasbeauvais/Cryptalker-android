@@ -191,39 +191,36 @@ public class DispatcherActivity extends AbstractActivity
     }
 
     private void loginWithTokenUser(final User user){
-        try {
-            RequestManager.getInstance(DispatcherActivity.this).loginWithTokenUser(user, new Listener<Response>() {
 
-                @Override
-                public void onResponse(Response response) {
+        RequestManager.getInstance(DispatcherActivity.this).loginWithTokenUser(user, new Listener<Response>() {
 
-                    if (response.isSuccess()) {
+            @Override
+            public void onResponse(Response response) {
 
-                        try {
-                            storeToken(response.getData().getString("token"));
+                if (response.isSuccess()) {
 
-                            Intent intent = new Intent(DispatcherActivity.this, DashboardActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
+                    try {
+                        storeToken(response.getData().getString("token"));
 
-                        } catch (JSONException e) {
-                            Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
-                        }
-                    } else {
-                        Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(DispatcherActivity.this, DashboardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
-                    }
-                }
-            }, new com.android.volley.Response.ErrorListener() {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.i(TAG, "Error during the request => " + error.toString());
+                    } catch (JSONException e) {
+                        Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
+                    }
+                } else {
+                    Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
-            });
-        } catch (JSONException e) {
-            Log.e(TAG, "Error executing request " + e.getMessage(), e);
-        }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error during the request => " + error.toString());
+            }
+        });
     }
 }

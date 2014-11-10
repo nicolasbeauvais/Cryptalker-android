@@ -13,6 +13,7 @@
     <string name="dialog_add_friend_pseudo">Pseudo</string>
     <string name="dialog_add_friend_positive_button">Add</string>
     <string name="dialog_add_friend_negative_button">Cancel</string>
+    <string name="dialog_add_friend_success">An invitation request was sent to your friend</string>
     <!-- /Dialog -->
 
     <!-- Inputs validation -->

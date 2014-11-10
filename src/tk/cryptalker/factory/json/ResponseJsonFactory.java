@@ -1,5 +1,6 @@
 package tk.cryptalker.factory.json;
 
+import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,4 +43,29 @@ public class ResponseJsonFactory
         return result;
     }
 
+    public static JSONObject getRequestJSONObject(Object object) throws JSONException
+    {
+        Gson gson = new Gson();
+
+        if (object == null){
+            Log.e(TAG, "Unable to create JSONObject from class caused by class null");
+            return null;
+        }
+
+        String jsonAsString = gson.toJson(object);
+
+        return new JSONObject(jsonAsString);
+    }
+
+    public static Object parseRequestFromJSONObject(JSONObject json, Class object) throws JSONException
+    {
+        Gson gson = new Gson();
+
+        if (json == null){
+            Log.e(TAG, "Unable to create Comment from Json caused by json null");
+            return null;
+        }
+
+        return gson.fromJson(json.toString(), object);
+    }
 }

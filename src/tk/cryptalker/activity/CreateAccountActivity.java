@@ -87,40 +87,37 @@ public class CreateAccountActivity extends AbstractActivity
     }
 
     private void createUser(final User user){
-        try {
-            RequestManager.getInstance(CreateAccountActivity.this).createUser(user, new Listener<Response>() {
 
-                @Override
-                public void onResponse(Response response) {
+        RequestManager.getInstance(CreateAccountActivity.this).createUser(user, new Listener<Response>() {
 
-                    if (response.isSuccess()) {
+            @Override
+            public void onResponse(Response response) {
 
-                        try {
-                            storeToken(response.getData().getString("token"));
+                if (response.isSuccess()) {
 
-                            Intent intent = new Intent(CreateAccountActivity.this, DashboardActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(intent);
+                    try {
+                        storeToken(response.getData().getString("token"));
 
-                        } catch (JSONException e) {
-                            Log.i(TAG, "JSON Exception on user create return parsing");
-                        }
-                    } else {
+                        Intent intent = new Intent(CreateAccountActivity.this, DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
 
-                        if (response.getErrors().length() > 0) {
-                            parseJsonErrors(response.getErrors());
-                        }
+                    } catch (JSONException e) {
+                        Log.i(TAG, "JSON Exception on user create return parsing");
+                    }
+                } else {
+
+                    if (response.getErrors().length() > 0) {
+                        parseJsonErrors(response.getErrors());
                     }
                 }
-            }, new ErrorListener() {
+            }
+        }, new ErrorListener() {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.i(TAG, "Error during the request => " + error.toString());
-                }
-            });
-        } catch (JSONException e) {
-            Log.e(TAG, "Error executing request " + e.getMessage(), e);
-        }
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error during the request => " + error.toString());
+            }
+        });
     }
 }

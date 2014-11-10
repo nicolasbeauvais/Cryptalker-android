@@ -3,6 +3,7 @@ package tk.cryptalker.request;
 import android.widget.Toast;
 import android.content.Context;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import tk.cryptalker.R;
 import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.factory.json.ResponseJsonFactory;
 import tk.cryptalker.manager.RequestManager;
 
 
@@ -58,5 +60,15 @@ public class AbstractRequest extends JsonObjectRequest
     public void start()
     {
         CrypTalkerApplication.getInstance().addToRequestQueue(this, getRequestTag());
+    }
+
+    public static String makeUrl(String rest)
+    {
+        return SERVER_URL + rest;
+    }
+
+    public static JSONObject getRequestJSONObject(Object data) throws JSONException
+    {
+        return ResponseJsonFactory.getRequestJSONObject(data);
     }
 }

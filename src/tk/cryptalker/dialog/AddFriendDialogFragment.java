@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.android.volley.VolleyError;
 import org.json.JSONException;
 import tk.cryptalker.R;
@@ -87,30 +88,27 @@ public class AddFriendDialogFragment extends DialogFragment
     }
 
     private void addFriend(final Friend friend){
-        try {
-            RequestManager.getInstance(getActivity()).AddFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
 
-                @Override
-                public void onResponse(Response response) {
+        RequestManager.getInstance(getActivity()).AddFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
 
-                    if (response.isSuccess()) {
-                        Log.i(TAG, "done");
-                    } else {
+            @Override
+            public void onResponse(Response response) {
 
-                        if (response.getErrors().length() > 0) {
-                            ((DashboardActivity) getActivity()).parseJsonErrorsDialog(response.getErrors(), dialog);
-                        }
+                if (response.isSuccess()) {
+                    Toast.makeText(getActivity(), R.string.dialog_add_friend_success, Toast.LENGTH_SHORT).show();
+                } else {
+
+                    if (response.getErrors().length() > 0) {
+                        ((DashboardActivity) getActivity()).parseJsonErrorsDialog(response.getErrors(), dialog);
                     }
                 }
-            }, new com.android.volley.Response.ErrorListener() {
+            }
+        }, new com.android.volley.Response.ErrorListener() {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.i(TAG, "Error during the request => " + error.toString());
-                }
-            });
-        } catch (JSONException e) {
-            Log.e(TAG, "Error executing request " + e.getMessage(), e);
-        }
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error during the request => " + error.toString());
+            }
+        });
     }
 }

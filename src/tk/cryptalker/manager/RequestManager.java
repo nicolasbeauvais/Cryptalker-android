@@ -3,19 +3,21 @@ package tk.cryptalker.manager;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tk.cryptalker.factory.json.ResponseJsonFactory;
 import tk.cryptalker.model.Friend;
+import tk.cryptalker.model.RequestConstructor;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
-import tk.cryptalker.request.AddFriendRequest;
-import tk.cryptalker.request.CreateUserRequest;
-import tk.cryptalker.request.LoginRequest;
-import tk.cryptalker.request.LoginWithTokenRequest;
+import tk.cryptalker.request.*;
+
+import java.lang.reflect.Constructor;
 
 public class RequestManager
 {
@@ -59,10 +61,19 @@ public class RequestManager
         return requestId++;
     }
 
-    public void createUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    private void requestAbstracter(Object data, RequestConstructor rc, ErrorListener errorListener)
     {
+        try {
+            AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), AbstractRequest.getRequestJSONObject(data), rc.getListener(), errorListener);
+            ar.start();
+        } catch (JSONException e) {
+            Log.e(TAG, "An error occurred during requestAbstracter method", e);
+        }
+    }
 
-        CreateUserRequest request = new CreateUserRequest(context, user, new Listener<JSONObject>() {
+    private Listener getGenericListener(final Listener listener)
+    {
+        return new Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject arg0) {
@@ -77,77 +88,50 @@ public class RequestManager
                     listener.onResponse(response);
                 }
             }
-        }, errorListener);
-
-        request.start();
+        };
     }
 
-    public void loginUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    public void createUser(User user, final Listener<Response> listener, ErrorListener errorListener)
     {
+        RequestConstructor requestConstructor = new RequestConstructor();
 
-        LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
+        requestConstructor.setVerb(Request.Method.POST);
+        requestConstructor.setRest("users/register");
+        requestConstructor.setListener(getGenericListener(listener));
 
-            @Override
-            public void onResponse(JSONObject arg0) {
-                Response response = null;
-                try {
-                    response = Response.parseFromJSONObject(arg0);
-                } catch (JSONException e) {
-                    Log.e(TAG, "An error occurred parsing login user response", e);
-                }
-
-                if (listener != null){
-                    listener.onResponse(response);
-                }
-            }
-        }, errorListener);
-
-        request.start();
+        requestAbstracter(user, requestConstructor, errorListener);
     }
 
-    public void loginWithTokenUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    public void loginUser(User user, final Listener<Response> listener, ErrorListener errorListener)
     {
+        RequestConstructor requestConstructor = new RequestConstructor();
 
-        LoginWithTokenRequest request = new LoginWithTokenRequest(context, user, new Listener<JSONObject>() {
+        requestConstructor.setVerb(Request.Method.POST);
+        requestConstructor.setRest("users/login");
+        requestConstructor.setListener(getGenericListener(listener));
 
-            @Override
-            public void onResponse(JSONObject arg0) {
-                Response response = null;
-                try {
-                    response = Response.parseFromJSONObject(arg0);
-                } catch (JSONException e) {
-                    Log.e(TAG, "An error occurred parsing loginWithToken user response", e);
-                }
-
-                if (listener != null){
-                    listener.onResponse(response);
-                }
-            }
-        }, errorListener);
-
-        request.start();
+        requestAbstracter(user, requestConstructor, errorListener);
     }
 
-    public void AddFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    public void loginWithTokenUser(User user, final Listener<Response> listener, ErrorListener errorListener)
     {
+        RequestConstructor requestConstructor = new RequestConstructor();
 
-        AddFriendRequest request = new AddFriendRequest(context, friend, new Listener<JSONObject>() {
+        requestConstructor.setVerb(Request.Method.POST);
+        requestConstructor.setRest("users/login-with-token");
+        requestConstructor.setListener(getGenericListener(listener));
 
-            @Override
-            public void onResponse(JSONObject arg0) {
-                Response response = null;
-                try {
-                    response = Response.parseFromJSONObject(arg0);
-                } catch (JSONException e) {
-                    Log.e(TAG, "An error occurred parsing AddFriend response", e);
-                }
+        requestAbstracter(user, requestConstructor, errorListener);
+    }
 
-                if (listener != null){
-                    listener.onResponse(response);
-                }
-            }
-        }, errorListener);
+    public void AddFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener)
+    {
+        RequestConstructor requestConstructor = new RequestConstructor();
 
-        request.start();
+        requestConstructor.setVerb(Request.Method.POST);
+        requestConstructor.setRest("friends/request");
+        requestConstructor.setListener(getGenericListener(listener));
+
+        requestAbstracter(friend, requestConstructor, errorListener);
     }
 }

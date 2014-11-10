@@ -19,5 +19,6 @@
     <orderEntry type="library" name="google-play-services" level="project" />
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" name="volley" level="project" />
+    <orderEntry type="library" name="gson-2.3" level="project" />
   </component>
 </module>
