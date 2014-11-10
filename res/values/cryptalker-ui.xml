@@ -62,6 +62,12 @@
     <!-- /General -->
 
     <!-- Dialog -->
+    <style name="dialog_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:typeface">monospace</item>
+    </style>
     <style name="dialog_header">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

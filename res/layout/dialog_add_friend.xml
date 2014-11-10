@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 tools:context=".AddFriendDialogFragment"
-              style="@style/layout">
+              style="@style/dialog_layout">
 
     <TextView
             android:id="@+id/dialog_header"
