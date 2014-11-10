@@ -1,14 +1,15 @@
 package tk.cryptalker.activity;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import tk.cryptalker.R;
 import tk.cryptalker.dialog.AddFriendDialogFragment;
 
-public class DashboardActivity extends AbstractActivity {
+public class DashboardActivity extends AbstractActivity
+{
 
     private MenuItem menuItem;
 

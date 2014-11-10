@@ -5,8 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.Menu;
 import android.view.MenuInflater;
-import tk.cryptalker.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +17,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import tk.cryptalker.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

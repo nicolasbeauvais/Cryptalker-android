@@ -15,7 +15,8 @@ import tk.cryptalker.request.CreateUserRequest;
 import tk.cryptalker.request.LoginRequest;
 import tk.cryptalker.request.LoginWithTokenRequest;
 
-public class RequestManager {
+public class RequestManager
+{
 
     private static final String TAG = "RequestManager";
 
@@ -33,7 +34,8 @@ public class RequestManager {
 
     private static int requestId = -1;
 
-    public static RequestManager getInstance(Context context) {
+    public static RequestManager getInstance(Context context)
+    {
 
         if (SINGLETON == null) {
             synchronized (__synchronizedObject) {
@@ -45,15 +47,18 @@ public class RequestManager {
         return SINGLETON;
     }
 
-    private RequestManager(Context context) {
+    private RequestManager(Context context)
+    {
         this.context = context;
     }
 
-    public static int getRequestId(){
+    public static int getRequestId()
+    {
         return requestId++;
     }
 
-    public void createUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
+    public void createUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    {
 
         CreateUserRequest request = new CreateUserRequest(context, user, new Listener<JSONObject>() {
 
@@ -75,7 +80,8 @@ public class RequestManager {
         request.start();
     }
 
-    public void loginUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
+    public void loginUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    {
 
         LoginRequest request = new LoginRequest(context, user, new Listener<JSONObject>() {
 
@@ -97,7 +103,8 @@ public class RequestManager {
         request.start();
     }
 
-    public void loginWithTokenUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException {
+    public void loginWithTokenUser(User user, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    {
 
         LoginWithTokenRequest request = new LoginWithTokenRequest(context, user, new Listener<JSONObject>() {
 

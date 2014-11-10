@@ -10,7 +10,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class CrypTalkerApplication extends Application{
+public class CrypTalkerApplication extends Application
+{
 
     private static final String TAG = "CrypTalkerApplication";
 

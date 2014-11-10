@@ -1,9 +1,9 @@
 package tk.cryptalker.request;
 
 import android.widget.Toast;
-import org.json.JSONObject;
-
 import android.content.Context;
+
+import org.json.JSONObject;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response.ErrorListener;
@@ -15,7 +15,8 @@ import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.manager.RequestManager;
 
 
-public class AbstractRequest extends JsonObjectRequest {
+public class AbstractRequest extends JsonObjectRequest
+{
 
     public static final String SERVER_URL = "https://cryptalker.tk/api/";
 
@@ -23,7 +24,8 @@ public class AbstractRequest extends JsonObjectRequest {
 
     private String requestId;
 
-    public AbstractRequest(Context context, int method, String url, JSONObject jsonRequest, Listener<JSONObject> listener, ErrorListener errorListener) {
+    public AbstractRequest(Context context, int method, String url, JSONObject jsonRequest, Listener<JSONObject> listener, ErrorListener errorListener)
+    {
 
         super(method, url, jsonRequest, listener, errorListener);
 
@@ -36,21 +38,25 @@ public class AbstractRequest extends JsonObjectRequest {
         initialiseRequest();
     }
 
-    private void initialiseRequest() {
+    private void initialiseRequest()
+    {
         setRetryPolicy(new DefaultRetryPolicy(10 * 1000, 1, 1.0f));
         setShouldCache(false);
     }
 
-    public String getRequestTag() {
+    public String getRequestTag()
+    {
         requestId = String.valueOf(RequestManager.getRequestId());
         return requestId;
     }
 
-    public String getRequestId() {
+    public String getRequestId()
+    {
         return requestId;
     }
 
-    public void start(){
+    public void start()
+    {
         CrypTalkerApplication.getInstance().addToRequestQueue(this, getRequestTag());
     }
 }

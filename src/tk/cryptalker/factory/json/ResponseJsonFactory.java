@@ -4,9 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+
 import tk.cryptalker.model.Response;
 
-public class ResponseJsonFactory {
+public class ResponseJsonFactory
+{
 
     private static final String TAG = "ResponseJsonFactory";
 

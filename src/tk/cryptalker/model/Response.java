@@ -1,12 +1,12 @@
 package tk.cryptalker.model;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 
-public class Response {
+public class Response
+{
 
     protected static final String TAG = "Response";
 
@@ -47,27 +47,33 @@ public class Response {
         return r;
     }
 
-    public JSONObject getData() {
+    public JSONObject getData()
+    {
         return data;
     }
 
-    public void setData(JSONObject data) {
+    public void setData(JSONObject data)
+    {
         this.data = data;
     }
 
-    public boolean isSuccess() {
+    public boolean isSuccess()
+    {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(boolean success)
+    {
         this.success = success;
     }
 
-    public JSONObject getErrors() {
+    public JSONObject getErrors()
+    {
         return errors;
     }
 
-    public void setErrors(JSONObject  errors) {
+    public void setErrors(JSONObject  errors)
+    {
         this.errors = errors;
     }
 }

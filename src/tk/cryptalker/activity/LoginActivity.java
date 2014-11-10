@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
+
 import org.json.JSONException;
+
 import tk.cryptalker.R;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;

@@ -1,10 +1,7 @@
 package tk.cryptalker.model;
 
-import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class User
 {
@@ -18,72 +15,89 @@ public class User
     private String mobile_id;
     private String token;
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getPseudo() {
+    public String getPseudo()
+    {
         return pseudo;
     }
 
-    public void setPseudo(String pseudo) {
+    public void setPseudo(String pseudo)
+    {
         this.pseudo = pseudo;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public String getPasswordConfirmation() {
+    public String getPasswordConfirmation()
+    {
         return password_confirmation;
     }
 
-    public void setPasswordConfirmation(String password_confirmation) {
+    public void setPasswordConfirmation(String password_confirmation)
+    {
         this.password_confirmation = password_confirmation;
     }
 
-    public String getMobileId() {
+    public String getMobileId()
+    {
         return mobile_id;
     }
 
-    public void setMobileId(String mobile_id) {
+    public void setMobileId(String mobile_id)
+    {
         this.mobile_id = mobile_id;
     }
 
-    public String getToken() {
+    public String getToken()
+    {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(String token)
+    {
         this.token = token;
     }
 
-    public String getLogin() {
+    public String getLogin()
+    {
         return pseudoOrEmail;
     }
 
-    public void setLogin(String pseudoOrEmail) {
+    public void setLogin(String pseudoOrEmail)
+    {
         this.pseudoOrEmail = pseudoOrEmail;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
@@ -96,7 +110,8 @@ public class User
                 '}';
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJSON()
+    {
 
         JSONObject j= new JSONObject();
         try {

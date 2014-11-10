@@ -4,7 +4,8 @@ import java.security.MessageDigest;
 
 import android.util.Log;
 
-public class CryptoUtils {
+public class CryptoUtils
+{
 
     private static final String TAG = "CryptoUtils";
 

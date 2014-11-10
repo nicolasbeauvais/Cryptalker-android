@@ -7,9 +7,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+
 import tk.cryptalker.model.User;
 
-public class UserJsonFactory {
+public class UserJsonFactory
+{
 
     private static final String TAG = "TokenJsonFactory";
 
