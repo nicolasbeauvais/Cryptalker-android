@@ -27,6 +27,7 @@
 
     <!-- activity_dispatcher -->
     <string name="dispatcher_loading">Loading...</string>
+    <string name="dispatcher_reload">Reload</string>
     <!-- activity_dispatcher -->
 
     <!-- activity_home -->

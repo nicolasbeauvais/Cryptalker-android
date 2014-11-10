@@ -15,4 +15,11 @@
             style="@style/dispatcher_progressbar"
             android:layout_alignBottom="@+id/loading_msg"/>
 
+    <Button
+            android:id="@+id/refresh"
+            style="@style/button"
+            android:text="@string/dispatcher_reload"
+            android:layout_alignBottom="@+id/loading_msg"
+            android:visibility="invisible"/>
+
 </RelativeLayout>
