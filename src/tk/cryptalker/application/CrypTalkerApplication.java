@@ -8,7 +8,12 @@ import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.HttpClientStack;
+import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.Volley;
+import org.apache.http.client.CookieStore;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class CrypTalkerApplication extends Application
 {
@@ -33,7 +38,14 @@ public class CrypTalkerApplication extends Application
     public RequestQueue getRequestQueue()
     {
         if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            CookieStore cookieStore = new BasicCookieStore();
+            httpClient.setCookieStore(cookieStore);
+
+            HttpStack httpStack = new HttpClientStack(httpClient);
+
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext(), httpStack);
         }
         return mRequestQueue;
     }

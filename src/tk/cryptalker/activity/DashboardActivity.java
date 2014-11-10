@@ -35,8 +35,8 @@ public class DashboardActivity extends AbstractActivity
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
 
-                        AddFriendDialogFragment newFragment = new AddFriendDialogFragment();
-                        newFragment.show(getFragmentManager(), "AddFriendDialogFragment");
+                        AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment();
+                        addFriendDialogFragment.show(getFragmentManager(), "AddFriendDialogFragment");
 
                         return true;
                     }
@@ -46,5 +46,4 @@ public class DashboardActivity extends AbstractActivity
 
         return value;
     }
-
 }

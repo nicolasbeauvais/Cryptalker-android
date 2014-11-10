@@ -9,8 +9,10 @@ import com.android.volley.Response.Listener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tk.cryptalker.model.Friend;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
+import tk.cryptalker.request.AddFriendRequest;
 import tk.cryptalker.request.CreateUserRequest;
 import tk.cryptalker.request.LoginRequest;
 import tk.cryptalker.request.LoginWithTokenRequest;
@@ -115,6 +117,29 @@ public class RequestManager
                     response = Response.parseFromJSONObject(arg0);
                 } catch (JSONException e) {
                     Log.e(TAG, "An error occurred parsing loginWithToken user response", e);
+                }
+
+                if (listener != null){
+                    listener.onResponse(response);
+                }
+            }
+        }, errorListener);
+
+        request.start();
+    }
+
+    public void AddFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener) throws JSONException
+    {
+
+        AddFriendRequest request = new AddFriendRequest(context, friend, new Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject arg0) {
+                Response response = null;
+                try {
+                    response = Response.parseFromJSONObject(arg0);
+                } catch (JSONException e) {
+                    Log.e(TAG, "An error occurred parsing AddFriend response", e);
                 }
 
                 if (listener != null){

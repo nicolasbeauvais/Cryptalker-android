@@ -1,17 +1,18 @@
 package tk.cryptalker.activity;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.text.*;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.Html;
-import android.text.Spanned;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -119,15 +120,19 @@ public class AbstractActivity extends Activity
         return validated;
     }
 
-    public Spanned errorMessage(int reference)
+    public SpannableStringBuilder errorMessage(int reference)
     {
-        return Html.fromHtml("<font color='red'>"
-                + getResources().getString(reference) + "</font>");
+        return errorMessage(context.getString(reference));
     }
 
-    public Spanned errorMessage(String string)
+    public SpannableStringBuilder errorMessage(String string)
     {
-        return Html.fromHtml("<font color='red'>" + string + "</font>");
+        int color = Color.RED;
+        ForegroundColorSpan fgcspan = new ForegroundColorSpan(color);
+        SpannableStringBuilder ssbuilder = new SpannableStringBuilder(string);
+        ssbuilder.setSpan(fgcspan, 0, string.length(), 0);
+
+        return ssbuilder;
     }
 
     public void parseJsonErrors(JSONObject errors)
@@ -149,6 +154,35 @@ public class AbstractActivity extends Activity
                 String value = message.getString("message");
 
                 TextView textView = (TextView)findViewById(getResources().getIdentifier(key, "id", getPackageName()));
+                textView.setError(errorMessage(value));
+                textView.requestFocus();
+            }
+
+            Log.i("AbstractActivity@parseJsonErrors", error_messages.toString());
+        } catch (JSONException e) {
+            Log.i("AbstractActivity@parseJsonErrors", e.toString());
+        }
+    }
+
+    public void parseJsonErrorsDialog(JSONObject errors, AlertDialog dialog)
+    {
+        JSONObject error_messages;
+
+        try {
+            error_messages = errors.getJSONObject("messages");
+
+            if (error_messages.length() < 0) {
+                return;
+            }
+
+            // Iterate errors from JSONObject
+            Iterator iterator = error_messages.keys();
+            while(iterator.hasNext()){
+                String key = (String)iterator.next();
+                JSONObject message = error_messages.getJSONObject(key);
+                String value = message.getString("message");
+
+                TextView textView = (TextView)dialog.findViewById(getResources().getIdentifier(key, "id", getPackageName()));
                 textView.setError(errorMessage(value));
                 textView.requestFocus();
             }

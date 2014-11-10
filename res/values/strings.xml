@@ -57,6 +57,6 @@
 
     <!-- activity_dashboard -->
     <string name="dashboard_title">CONTACTS</string>
-    <string name="dashboard_catch_phrase">Welcome to CrypTalker Dude !</string>
+    <string name="dashboard_catch_phrase">Welcome to CrypTalker!</string>
     <!-- activity_dashboard -->
 </resources>

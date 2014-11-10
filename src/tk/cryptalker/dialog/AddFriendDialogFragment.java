@@ -5,34 +5,112 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import org.json.JSONException;
 import tk.cryptalker.R;
+import tk.cryptalker.activity.DashboardActivity;
+import tk.cryptalker.manager.RequestManager;
+import tk.cryptalker.model.Friend;
+import tk.cryptalker.model.Response;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddFriendDialogFragment extends DialogFragment
 {
+    private static final String TAG = "AddFriendDialogFragment";
+
+    private AlertDialog dialog;
+    private EditText pseudo;
+    private ArrayList<TextView> inputs = new ArrayList<TextView>();
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dialog_add_friend, null))
-                // Add action buttons
-                .setPositiveButton(R.string.dialog_add_friend_positive_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-                    }
-                })
-                .setNegativeButton(R.string.dialog_add_friend_negative_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        AddFriendDialogFragment.this.getDialog().cancel();
-                    }
-                });
-        return builder.create();
+        View inflateView = inflater.inflate(R.layout.dialog_add_friend, null);
+
+        builder.setView(inflateView);
+        builder.setPositiveButton(R.string.dialog_add_friend_positive_button, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_add_friend_negative_button, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                AddFriendDialogFragment.this.getDialog().cancel();
+            }
+        });
+
+        dialog = builder.create();
+
+        return dialog;
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
 
+        AlertDialog d = (AlertDialog)getDialog();
+
+        pseudo = (EditText)d.findViewById(R.id.pseudo);
+
+        inputs.addAll(Arrays.asList(pseudo));
+
+        Button positiveButton = d.getButton(Dialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (((DashboardActivity)getActivity()).validation(inputs)) {
+                    Friend friend = fillValues();
+                    addFriend(friend);
+                }
+            }
+        });
+    }
+
+    private Friend fillValues()
+    {
+        Friend friend = new Friend();
+        friend.setPseudo(pseudo.getText().toString());
+
+        return friend;
+    }
+
+    private void addFriend(final Friend friend){
+        try {
+            RequestManager.getInstance(getActivity()).AddFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
+
+                @Override
+                public void onResponse(Response response) {
+
+                    if (response.isSuccess()) {
+                        Log.i(TAG, "done");
+                    } else {
+
+                        if (response.getErrors().length() > 0) {
+                            ((DashboardActivity) getActivity()).parseJsonErrorsDialog(response.getErrors(), dialog);
+                        }
+                    }
+                }
+            }, new com.android.volley.Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i(TAG, "Error during the request => " + error.toString());
+                }
+            });
+        } catch (JSONException e) {
+            Log.e(TAG, "Error executing request " + e.getMessage(), e);
+        }
+    }
 }
