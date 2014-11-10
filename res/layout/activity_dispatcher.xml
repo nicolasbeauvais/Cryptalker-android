@@ -7,17 +7,11 @@
 
     <TextView
             android:id="@+id/loading_msg"
-            style="@style/catch_phrase"
-            android:text="@string/dispatcher_loading"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"/>
+            style="@style/dispatcher_loading_text"
+            android:text="@string/dispatcher_loading"/>
 
     <ProgressBar
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:layout_alignBottom="@+id/loading_msg"
-            android:layout_alignParentStart="true"/>
+            style="@style/dispatcher_progressbar"
+            android:layout_alignBottom="@+id/loading_msg"/>
 
 </RelativeLayout>

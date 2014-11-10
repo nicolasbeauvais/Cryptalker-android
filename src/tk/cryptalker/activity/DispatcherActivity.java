@@ -38,6 +38,19 @@ public class DispatcherActivity extends AbstractActivity
 
         context = getApplicationContext();
 
+        // Check network connection
+        if (!CrypTalkerApplication.isNetworkAvailable(context)) {
+
+            // Hide progressBar
+            ProgressBar progressBar = (ProgressBar)findViewById(R.id.dispatcher_progressbar);
+            progressBar.setVisibility(View.INVISIBLE);
+
+            // Change loading text
+            TextView loadingMsg = (TextView)findViewById(R.id.loading_msg);
+            loadingMsg.setText(context.getText(R.string.no_internet_connection));
+            finish();
+        }
+
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
         if (checkPlayServices()) {
 
