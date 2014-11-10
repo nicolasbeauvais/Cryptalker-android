@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                tools:context=".HomeActivity"
+                tools:context=".DispatcherActivity"
                 style="@style/layout">
 
     <TextView
@@ -11,6 +11,7 @@
             android:text="@string/dispatcher_loading"/>
 
     <ProgressBar
+            android:id="@+id/dispatcher_progressbar"
             style="@style/dispatcher_progressbar"
             android:layout_alignBottom="@+id/loading_msg"/>
 
