@@ -10,15 +10,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
 import org.json.JSONException;
-
 import tk.cryptalker.R;
 import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.manager.RequestManager;
