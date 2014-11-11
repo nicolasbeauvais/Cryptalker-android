@@ -95,7 +95,8 @@ public class AddFriendDialogFragment extends DialogFragment
             public void onResponse(Response response) {
 
                 if (response.isSuccess()) {
-                    Toast.makeText(getActivity(), R.string.dialog_add_friend_success, Toast.LENGTH_SHORT).show();
+                    dismiss();
+                    Toast.makeText(getActivity(), R.string.dialog_add_friend_success, Toast.LENGTH_LONG).show();
                 } else {
 
                     if (response.getErrors().length() > 0) {
