@@ -98,9 +98,7 @@ public class CreateAccountActivity extends AbstractActivity
                     try {
                         storeToken(response.getData().getString("token"));
 
-                        Intent intent = new Intent(CreateAccountActivity.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user create return parsing");

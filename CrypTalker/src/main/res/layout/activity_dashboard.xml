@@ -10,4 +10,18 @@
             style="@style/catch_phrase"
             android:text="@string/dashboard_catch_phrase"/>
 
+    <RelativeLayout
+            android:id="@+id/friend_request_received"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/friend_request_sended"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+    </RelativeLayout>
+
 </RelativeLayout>

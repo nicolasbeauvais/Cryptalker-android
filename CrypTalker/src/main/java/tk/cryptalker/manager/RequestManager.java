@@ -124,6 +124,17 @@ public class RequestManager
         requestAbstracter(user, requestConstructor, errorListener);
     }
 
+    public void getUserInfo(final Listener<Response> listener, ErrorListener errorListener)
+    {
+        RequestConstructor requestConstructor = new RequestConstructor();
+
+        requestConstructor.setVerb(Request.Method.GET);
+        requestConstructor.setRest("users/info");
+        requestConstructor.setListener(getGenericListener(listener));
+
+        requestAbstracter(new User(), requestConstructor, errorListener);
+    }
+
     public void AddFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener)
     {
         RequestConstructor requestConstructor = new RequestConstructor();

@@ -92,9 +92,7 @@ public class LoginActivity extends AbstractActivity
                     try {
                         storeToken(response.getData().getString("token"));
 
-                        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user login return parsing");

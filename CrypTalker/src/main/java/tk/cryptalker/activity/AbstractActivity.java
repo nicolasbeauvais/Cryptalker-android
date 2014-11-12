@@ -1,7 +1,6 @@
 package tk.cryptalker.activity;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -19,21 +18,30 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.Response.ErrorListener;
+import org.json.JSONArray;
 import tk.cryptalker.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import tk.cryptalker.manager.RequestManager;
+import tk.cryptalker.model.Response;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AbstractActivity extends Activity
 {
-    static Context context;
+    private static final String TAG = "AbstractActivity";
 
-    public static final String PROPERTY_REG_ID = "registration_id";
-    public static final String PROPERTY_TOKEN = "token";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
+    static Context context;
+    private static final String P_APP_VERSION = "appVersion";
+
+    public static final String P_REG_ID = "registration_id";
+    public static final String P_TOKEN = "token";
+    public static final String P_FRIEND_REQUEST_RECEIVED = "token";
+    public static final String P_FRIEND_REQUEST_SENDED = "token";
 
     private int menu;
 
@@ -205,8 +213,8 @@ public class AbstractActivity extends Activity
         int appVersion = getAppVersion(context);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
+        editor.putString(P_REG_ID, regId);
+        editor.putInt(P_APP_VERSION, appVersion);
         editor.commit();
     }
 
@@ -220,14 +228,14 @@ public class AbstractActivity extends Activity
      */
     public String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGcmPreferences();
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        String registrationId = prefs.getString(P_REG_ID, "");
         if (registrationId.isEmpty()) {
             return "";
         }
         // Check if app was updated; if so, it must clear the registration ID
         // since the existing regID is not guaranteed to work with the new
         // app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int registeredVersion = prefs.getInt(P_APP_VERSION, Integer.MIN_VALUE);
         int currentVersion = getAppVersion(context);
         if (registeredVersion != currentVersion) {
             return "";
@@ -256,18 +264,74 @@ public class AbstractActivity extends Activity
         }
     }
 
+    public void getUserInfo()
+    {
+        RequestManager.getInstance(AbstractActivity.this).getUserInfo(new com.android.volley.Response.Listener<Response>() {
+
+            @Override
+            public void onResponse(Response response) {
+
+                if (response.isSuccess()) {
+
+                    try {
+                        storeUserInfo(response.getData());
+
+                        Intent intent = new Intent(AbstractActivity.this, DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+
+                    } catch (JSONException e) {
+                        Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
+                    }
+                } else {
+                    Intent intent = new Intent(AbstractActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+        }, new ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error during the request => " + error.toString());
+            }
+        });
+    }
+
     public void storeToken(String token) {
         final SharedPreferences prefs = getGcmPreferences();
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_TOKEN, token);
+        editor.putString(P_TOKEN, token);
         editor.commit();
     }
 
     public String getToken() {
         final SharedPreferences prefs = getGcmPreferences();
-        String token = prefs.getString(PROPERTY_TOKEN, "");
+        String token = prefs.getString(P_TOKEN, "");
 
         return token;
+    }
+
+    public void storeUserInfo(JSONObject data) throws JSONException {
+        final SharedPreferences prefs = getGcmPreferences();
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(P_FRIEND_REQUEST_RECEIVED, data.getJSONArray("friend_request_received").toString());
+        editor.putString(P_FRIEND_REQUEST_SENDED, data.getJSONArray("friend_request_sended").toString());
+        editor.commit();
+
+    }
+
+    public JSONArray getUserInfo(String key) {
+        final SharedPreferences prefs = getGcmPreferences();
+        String data = prefs.getString(key, "");
+
+        try {
+            JSONArray jsonData = new JSONArray(data);
+            return jsonData;
+        } catch (JSONException e) {
+            return new JSONArray();
+        }
     }
 }

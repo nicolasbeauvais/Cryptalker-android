@@ -199,9 +199,7 @@ public class DispatcherActivity extends AbstractActivity
                     try {
                         storeToken(response.getData().getString("token"));
 
-                        Intent intent = new Intent(DispatcherActivity.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
+                        getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
