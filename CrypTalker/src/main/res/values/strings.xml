@@ -57,7 +57,10 @@
     <!-- /activity_create_account -->
 
     <!-- activity_dashboard -->
-    <string name="dashboard_title">CONTACTS</string>
+    <string name="dashboard_title">CrypTalker</string>
     <string name="dashboard_catch_phrase">Welcome to CrypTalker!</string>
+    <string name="dashboard_tab_contacts">Contacts</string>
+    <string name="dashboard_tab_friend_request_received">Friends request received</string>
+    <string name="dashboard_tab_friend_request_sended">Friends request sent</string>
     <!-- activity_dashboard -->
 </resources>

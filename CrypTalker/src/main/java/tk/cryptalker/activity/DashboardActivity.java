@@ -6,13 +6,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tk.cryptalker.R;
-import tk.cryptalker.dialog.AddFriendDialogFragment;
+import tk.cryptalker.adapter.CustomListAdapter;
+import tk.cryptalker.fragment.AddFriendDialogFragment;
+import tk.cryptalker.model.Room;
+import tk.cryptalker.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends AbstractActivity
 {
@@ -20,8 +25,10 @@ public class DashboardActivity extends AbstractActivity
 
     private MenuItem menuItem;
 
+    private ListView listView;
+    private CustomListAdapter adapter;
     private JSONArray friend_request_received;
-    private JSONArray friend_request_sended;
+    private List<Room> roomList = new ArrayList<Room>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,43 +42,30 @@ public class DashboardActivity extends AbstractActivity
     private void initView()
     {
         friend_request_received = getUserInfo(P_FRIEND_REQUEST_RECEIVED);
-        friend_request_sended = getUserInfo(P_FRIEND_REQUEST_SENDED);
 
-        RelativeLayout wrapper_friend_request_received = (RelativeLayout)findViewById(R.id.friend_request_received);
-        RelativeLayout wrapper_friend_request_sended = (RelativeLayout)findViewById(R.id.friend_request_sended);
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new CustomListAdapter(this, roomList);
+        listView.setAdapter(adapter);
 
-        try {
+        for (int i = 0; i < friend_request_received.length(); i++) {
 
-            // Display Friend request received
-            for (int i = 0; i < friend_request_received.length(); i++) {
+            try {
+                JSONObject obj = friend_request_received.getJSONObject(i);
+                Room room = new Room();
 
-                JSONObject friend = friend_request_received.getJSONObject(i);
-                int id = friend.getInt("id");
-                String pseudo = friend.getString("pseudo");
+                Log.i(TAG, obj.toString());
 
-                TextView textView = new TextView(this);
-                textView.setText(pseudo);
+                room.setName(obj.getString("pseudo"));
+                room.setInvite(true);
 
-                wrapper_friend_request_received.addView(textView);
+                roomList.add(room);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            // Display Friend request sended
-            for (int i = 0; i < friend_request_sended.length(); i++) {
-
-                JSONObject friend = friend_request_sended.getJSONObject(i);
-                int id = friend.getInt("id");
-                String pseudo = friend.getString("pseudo");
-
-                TextView textView = new TextView(this);
-                textView.setText(pseudo);
-
-                wrapper_friend_request_sended.addView(textView);
-            }
-        } catch (JSONException e) {
-
         }
-    }
 
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {

@@ -1,4 +1,4 @@
-package tk.cryptalker.dialog;
+package tk.cryptalker.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 import com.android.volley.VolleyError;
-import org.json.JSONException;
 import tk.cryptalker.R;
 import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.manager.RequestManager;

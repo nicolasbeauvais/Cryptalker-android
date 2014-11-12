@@ -1,27 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                tools:context=".DashboardActivity"
+                tools:context=".DispatcherActivity"
                 style="@style/layout">
 
-    <TextView
-            android:id="@+id/catch_phrase"
-            style="@style/catch_phrase"
-            android:text="@string/dashboard_catch_phrase"/>
-
-    <RelativeLayout
-            android:id="@+id/friend_request_received"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-    </RelativeLayout>
-
-    <RelativeLayout
-            android:id="@+id/friend_request_sended"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-    </RelativeLayout>
-
+        <ListView
+                android:id="@+id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="#000000"
+                android:dividerHeight="1dp" />
 </RelativeLayout>

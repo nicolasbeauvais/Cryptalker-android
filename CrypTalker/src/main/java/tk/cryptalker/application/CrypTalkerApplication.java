@@ -17,18 +17,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class CrypTalkerApplication extends Application
 {
+    @Override
+    public void onCreate() {
+        mInstance = this;
+    }
+
 
     private static final String TAG = "CrypTalkerApplication";
 
     private RequestQueue mRequestQueue;
 
     private static CrypTalkerApplication mInstance;
-
-    @Override
-    public void onCreate()
-    {
-        mInstance = this;
-    }
 
     public static synchronized CrypTalkerApplication getInstance()
     {
