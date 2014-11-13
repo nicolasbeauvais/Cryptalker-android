@@ -133,7 +133,7 @@ public class CustomListAdapter extends BaseAdapter {
 
     private void denyFriendRequest(int user_id, final int position)
     {
-        RequestManager.getInstance(DashboardActivity.getContext()).acceptFriendRequest(user_id, new com.android.volley.Response.Listener<Response>() {
+        RequestManager.getInstance(DashboardActivity.getContext()).denyFriendRequest(user_id, new com.android.volley.Response.Listener<Response>() {
 
             @Override
             public void onResponse(Response response) {

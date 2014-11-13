@@ -301,8 +301,6 @@ public class AbstractActivity extends Activity
     public void storeToken(String token) {
         final SharedPreferences prefs = getGcmPreferences();
 
-        Log.i(TAG, "store token:" + token);
-
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_TOKEN, token);
         editor.commit();
@@ -311,8 +309,6 @@ public class AbstractActivity extends Activity
     public String getToken() {
         final SharedPreferences prefs = getGcmPreferences();
         String token = prefs.getString(P_TOKEN, "");
-
-        Log.i(TAG, "get token:" + token);
 
         return token;
     }

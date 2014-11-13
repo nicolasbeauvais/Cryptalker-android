@@ -162,4 +162,15 @@ public class RequestManager
 
         requestAbstracter(null, requestConstructor, errorListener);
     }
+
+    public void denyFriendRequest(int user_id, final Listener<Response> listener, ErrorListener errorListener)
+    {
+        RequestConstructor requestConstructor = new RequestConstructor();
+
+        requestConstructor.setVerb(Request.Method.GET);
+        requestConstructor.setRest("friends/deny/" + String.valueOf(user_id));
+        requestConstructor.setListener(getGenericListener(listener));
+
+        requestAbstracter(null, requestConstructor, errorListener);
+    }
 }
