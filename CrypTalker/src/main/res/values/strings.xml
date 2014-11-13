@@ -62,5 +62,9 @@
     <string name="dashboard_tab_contacts">Contacts</string>
     <string name="dashboard_tab_friend_request_received">Friends request received</string>
     <string name="dashboard_tab_friend_request_sended">Friends request sent</string>
+    <string name="dashboard_row_invite_accept">Accept</string>
+    <string name="dashboard_row_invite_deny">Deny</string>
+    <string name="dashboard_row_invite_explanation">sent you a friend request</string>
+    <string name="dashboard_tab_friend_request_accepted">You accepted the friend request</string>
     <!-- activity_dashboard -->
 </resources>

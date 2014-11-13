@@ -77,7 +77,7 @@ public class DispatcherActivity extends AbstractActivity
 
             @Override
             public void onClick(View v) {
-                Log.i("TOTOTOTO", "CALL RESTART");
+
                 Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
@@ -85,9 +85,11 @@ public class DispatcherActivity extends AbstractActivity
         });
     }
 
+    /**
+     * Check device for Play Services APK. If check succeeds, proceed with GCM registration.
+     */
     private void dispatch()
     {
-        // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
         if (checkPlayServices()) {
 
             gcm = GoogleCloudMessaging.getInstance(this);
@@ -205,6 +207,10 @@ public class DispatcherActivity extends AbstractActivity
                         Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
                     }
                 } else {
+
+                    Log.i(TAG, "response fail :(");
+                    Log.i(TAG, response.toString());
+
                     Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);

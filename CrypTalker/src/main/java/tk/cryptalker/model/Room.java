@@ -5,6 +5,7 @@ public class Room
     private int id;
     private String name;
     private boolean isInvite;
+    private int invite_id;
     private String lastMessage;
 
     public int getId() {
@@ -29,6 +30,14 @@ public class Room
 
     public void setInvite(boolean isInvite) {
         this.isInvite = isInvite;
+    }
+
+    public int getInviteId() {
+        return invite_id;
+    }
+
+    public void setInviteId(int invite_id) {
+        this.invite_id = invite_id;
     }
 
     public String getLastMessage() {

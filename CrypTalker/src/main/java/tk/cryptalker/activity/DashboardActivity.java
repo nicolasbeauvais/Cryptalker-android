@@ -26,9 +26,9 @@ public class DashboardActivity extends AbstractActivity
     private MenuItem menuItem;
 
     private ListView listView;
-    private CustomListAdapter adapter;
+    public static CustomListAdapter adapter;
     private JSONArray friend_request_received;
-    private List<Room> roomList = new ArrayList<Room>();
+    public static List<Room> roomList = new ArrayList<Room>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class DashboardActivity extends AbstractActivity
 
                 room.setName(obj.getString("pseudo"));
                 room.setInvite(true);
+                room.setInviteId(obj.getInt("id"));
 
                 roomList.add(room);
             } catch (JSONException e) {

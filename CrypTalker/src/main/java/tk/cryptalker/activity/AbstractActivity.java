@@ -40,8 +40,8 @@ public class AbstractActivity extends Activity
 
     public static final String P_REG_ID = "registration_id";
     public static final String P_TOKEN = "token";
-    public static final String P_FRIEND_REQUEST_RECEIVED = "token";
-    public static final String P_FRIEND_REQUEST_SENDED = "token";
+    public static final String P_FRIEND_REQUEST_RECEIVED = "friend_request_received";
+    public static final String P_FRIEND_REQUEST_SENDED = "friend_request_sended";
 
     private int menu;
 
@@ -281,7 +281,7 @@ public class AbstractActivity extends Activity
                         context.startActivity(intent);
 
                     } catch (JSONException e) {
-                        Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
+                        Log.i(TAG, "JSON Exception on user getUserInfo return parsing");
                     }
                 } else {
                     Intent intent = new Intent(AbstractActivity.this, HomeActivity.class);
@@ -301,6 +301,8 @@ public class AbstractActivity extends Activity
     public void storeToken(String token) {
         final SharedPreferences prefs = getGcmPreferences();
 
+        Log.i(TAG, "store token:" + token);
+
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_TOKEN, token);
         editor.commit();
@@ -309,6 +311,8 @@ public class AbstractActivity extends Activity
     public String getToken() {
         final SharedPreferences prefs = getGcmPreferences();
         String token = prefs.getString(P_TOKEN, "");
+
+        Log.i(TAG, "get token:" + token);
 
         return token;
     }
@@ -320,7 +324,6 @@ public class AbstractActivity extends Activity
         editor.putString(P_FRIEND_REQUEST_RECEIVED, data.getJSONArray("friend_request_received").toString());
         editor.putString(P_FRIEND_REQUEST_SENDED, data.getJSONArray("friend_request_sended").toString());
         editor.commit();
-
     }
 
     public JSONArray getUserInfo(String key) {

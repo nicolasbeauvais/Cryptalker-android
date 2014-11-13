@@ -63,12 +63,18 @@ public class RequestManager
 
     private void requestAbstracter(Object data, RequestConstructor rc, ErrorListener errorListener)
     {
+        JSONObject jsonData = null;
+
         try {
-            AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), AbstractRequest.getRequestJSONObject(data), rc.getListener(), errorListener);
-            ar.start();
+            if (data != null) {
+                jsonData = AbstractRequest.getRequestJSONObject(data);
+            }
         } catch (JSONException e) {
             Log.e(TAG, "An error occurred during requestAbstracter method", e);
         }
+
+        AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), jsonData, rc.getListener(), errorListener);
+        ar.start();
     }
 
     private Listener getGenericListener(final Listener listener)
@@ -132,10 +138,10 @@ public class RequestManager
         requestConstructor.setRest("users/info");
         requestConstructor.setListener(getGenericListener(listener));
 
-        requestAbstracter(new User(), requestConstructor, errorListener);
+        requestAbstracter(null, requestConstructor, errorListener);
     }
 
-    public void AddFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener)
+    public void addFriendRequest(Friend friend, final Listener<Response> listener, ErrorListener errorListener)
     {
         RequestConstructor requestConstructor = new RequestConstructor();
 
@@ -144,5 +150,16 @@ public class RequestManager
         requestConstructor.setListener(getGenericListener(listener));
 
         requestAbstracter(friend, requestConstructor, errorListener);
+    }
+
+    public void acceptFriendRequest(int user_id, final Listener<Response> listener, ErrorListener errorListener)
+    {
+        RequestConstructor requestConstructor = new RequestConstructor();
+
+        requestConstructor.setVerb(Request.Method.GET);
+        requestConstructor.setRest("friends/accept/" + String.valueOf(user_id));
+        requestConstructor.setListener(getGenericListener(listener));
+
+        requestAbstracter(null, requestConstructor, errorListener);
     }
 }

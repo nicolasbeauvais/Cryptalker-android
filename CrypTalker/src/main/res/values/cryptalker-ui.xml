@@ -2,9 +2,12 @@
 
     <!-- Attributes -->
     <color name="main">#33b5e5</color>
+    <color name="red">#ffe54541</color>
     <color name="white">#ffffff</color>
+    <color name="medium_grey">#464646</color>
     <color name="light_grey">#aaaaaa</color>
     <!-- /Attributes -->
+
 
     <!-- Holo Theme Override -->
     <style name="Cryptalker"
@@ -18,12 +21,14 @@
     </style>
     <!-- /Holo Theme Override -->
 
+
     <!-- Menu -->
     <style name="menu">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
     <!-- /Menu -->
+
 
     <!-- Page Wrapper -->
     <style name="layout">
@@ -35,7 +40,15 @@
         <item name="android:paddingRight">20dp</item>
         <item name="android:paddingTop">10dp</item>
     </style>
+
+    <style name="layout_100">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:typeface">monospace</item>
+    </style>
     <!-- /Page Wrapper -->
+
 
     <!-- General -->
     <style name="input_text">
@@ -61,6 +74,7 @@
     </style>
     <!-- /General -->
 
+
     <!-- Dialog -->
     <style name="dialog_layout">
         <item name="android:layout_width">match_parent</item>
@@ -68,6 +82,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:typeface">monospace</item>
     </style>
+
     <style name="dialog_header">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -89,6 +104,7 @@
     </style>
     <!-- /Dialog -->
 
+
     <!-- Dispatcher -->
     <style name="dispatcher_loading_text">
         <item name="android:layout_width">fill_parent</item>
@@ -101,6 +117,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">27dp</item>
     </style>
+
     <style name="dispatcher_progressbar">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -108,6 +125,7 @@
         <item name="android:indeterminate">true</item>
     </style>
     <!-- /Dispatcher -->
+
 
     <!-- Home -->
     <style name="catch_phrase">
@@ -120,10 +138,57 @@
     </style>
     <!-- /Home -->
 
+
     <!-- Dashboard -->
     <style name="user_list">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="dashboard_list">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@color/light_grey</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="dashboard_row_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">17dp</item>
+        <item name="android:paddingBottom">17dp</item>
+    </style>
+
+    <style name="dashboard_row_name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:color">@color/main</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="dashboard_row_last_message">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:color">@color/medium_grey</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="dashboard_half_button" parent="button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+
+    <style name="dashboard_half_button_red" parent="dashboard_half_button">
+        <item name="android:background">@drawable/rounded_button_red</item>
+        <item name="android:layout_marginLeft">10dp</item>
     </style>
     <!-- /Dashboard -->
 

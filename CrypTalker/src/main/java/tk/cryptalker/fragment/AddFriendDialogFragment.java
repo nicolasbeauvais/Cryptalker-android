@@ -88,7 +88,7 @@ public class AddFriendDialogFragment extends DialogFragment
 
     private void addFriend(final Friend friend){
 
-        RequestManager.getInstance(getActivity()).AddFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
+        RequestManager.getInstance(getActivity()).addFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
 
             @Override
             public void onResponse(Response response) {
