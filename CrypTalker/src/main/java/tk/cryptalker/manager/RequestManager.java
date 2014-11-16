@@ -168,7 +168,7 @@ public class RequestManager
         RequestConstructor requestConstructor = new RequestConstructor();
 
         requestConstructor.setVerb(Request.Method.GET);
-        requestConstructor.setRest("friends/deny/" + String.valueOf(user_id));
+        requestConstructor.setRest("friends/refuse/" + String.valueOf(user_id));
         requestConstructor.setListener(getGenericListener(listener));
 
         requestAbstracter(null, requestConstructor, errorListener);

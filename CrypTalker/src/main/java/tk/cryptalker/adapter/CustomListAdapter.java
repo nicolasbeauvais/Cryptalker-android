@@ -140,7 +140,7 @@ public class CustomListAdapter extends BaseAdapter {
 
                 if (response.isSuccess()) {
 
-                    Toast.makeText(DashboardActivity.getContext(), R.string.dashboard_tab_friend_request_accepted, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DashboardActivity.getContext(), R.string.dashboard_tab_friend_request_deny, Toast.LENGTH_SHORT).show();
 
                     rooms.remove(position);
                     DashboardActivity.roomList = rooms;
