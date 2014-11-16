@@ -95,8 +95,8 @@ public class CustomListAdapter extends BaseAdapter {
 
         } else {
             convertView = inflater.inflate(R.layout.row_dashboard_room, null);
-
             TextView name = (TextView) convertView.findViewById(R.id.name);
+
             TextView lastMessage = (TextView) convertView.findViewById(R.id.last_message);
 
             name.setText(room.getName());

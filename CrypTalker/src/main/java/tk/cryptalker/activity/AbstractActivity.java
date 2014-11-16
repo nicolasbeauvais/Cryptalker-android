@@ -42,6 +42,7 @@ public class AbstractActivity extends Activity
     public static final String P_TOKEN = "token";
     public static final String P_FRIEND_REQUEST_RECEIVED = "friend_request_received";
     public static final String P_FRIEND_REQUEST_SENDED = "friend_request_sended";
+    public static final String P_ROOMS = "rooms";
 
     private int menu;
 
@@ -319,6 +320,7 @@ public class AbstractActivity extends Activity
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_FRIEND_REQUEST_RECEIVED, data.getJSONArray("friend_request_received").toString());
         editor.putString(P_FRIEND_REQUEST_SENDED, data.getJSONArray("friend_request_sended").toString());
+        editor.putString(P_ROOMS, data.getJSONArray("rooms").toString());
         editor.commit();
     }
 

@@ -2,11 +2,10 @@ package tk.cryptalker.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.ListView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +13,6 @@ import tk.cryptalker.R;
 import tk.cryptalker.adapter.CustomListAdapter;
 import tk.cryptalker.fragment.AddFriendDialogFragment;
 import tk.cryptalker.model.Room;
-import tk.cryptalker.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,8 @@ public class DashboardActivity extends AbstractActivity
     private ListView listView;
     public static CustomListAdapter adapter;
     private JSONArray friend_request_received;
-    public static List<Room> roomList = new ArrayList<Room>();
+    private JSONArray rooms;
+    public static List<Room> roomList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,14 @@ public class DashboardActivity extends AbstractActivity
     private void initView()
     {
         friend_request_received = getUserInfo(P_FRIEND_REQUEST_RECEIVED);
+        rooms = getUserInfo(P_ROOMS);
+
+        roomList = new ArrayList<Room>();
 
         listView = (ListView) findViewById(R.id.list);
         adapter = new CustomListAdapter(this, roomList);
         listView.setAdapter(adapter);
+
 
         for (int i = 0; i < friend_request_received.length(); i++) {
 
@@ -53,11 +56,25 @@ public class DashboardActivity extends AbstractActivity
                 JSONObject obj = friend_request_received.getJSONObject(i);
                 Room room = new Room();
 
-                Log.i(TAG, obj.toString());
-
                 room.setName(obj.getString("pseudo"));
                 room.setInvite(true);
                 room.setInviteId(obj.getInt("id"));
+
+                roomList.add(room);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < rooms.length(); i++) {
+
+            try {
+                JSONObject obj = rooms.getJSONObject(i);
+                Room room = new Room();
+
+                room.setId(obj.getInt("room_id"));
+                room.setName(obj.getString("name"));
+                room.setInvite(false);
 
                 roomList.add(room);
             } catch (JSONException e) {
