@@ -63,6 +63,7 @@ public class ChatActivity extends AbstractActivity
     private Message fillValues()
     {
         Message newMessage = new Message();
+        newMessage.setRoom_id(roomId);
         newMessage.setMessage(message.getText().toString());
 
         return newMessage;
