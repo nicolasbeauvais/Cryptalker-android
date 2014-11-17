@@ -1,9 +1,12 @@
 package tk.cryptalker.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -11,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import tk.cryptalker.R;
 import tk.cryptalker.adapter.CustomListAdapter;
+import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.fragment.AddFriendDialogFragment;
 import tk.cryptalker.model.Room;
 
@@ -33,15 +37,15 @@ public class DashboardActivity extends AbstractActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_dashboard, R.string.dashboard_title, R.menu.dashboard);
+        makeLayout(R.layout.activity_dashboard, getString(R.string.dashboard_title), R.menu.dashboard);
 
         initView();
     }
 
     private void initView()
     {
-        friend_request_received = getUserInfo(P_FRIEND_REQUEST_RECEIVED);
-        rooms = getUserInfo(P_ROOMS);
+        friend_request_received = StorageFactory.getUserInfo(StorageFactory.P_FRIEND_REQUEST_RECEIVED, context);
+        rooms = StorageFactory.getUserInfo(StorageFactory.P_ROOMS, context);
 
         roomList = new ArrayList<Room>();
 
@@ -80,6 +84,25 @@ public class DashboardActivity extends AbstractActivity
                 e.printStackTrace();
             }
         }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int position, long lo){
+
+                Room item = (Room)adapter.getItem(position);
+
+                Intent intent = new Intent(context, ChatActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("roomId", item.getId());
+                b.putString("roomName", item.getName());
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+
+
+        });
 
         adapter.notifyDataSetChanged();
     }

@@ -66,9 +66,11 @@ public class CustomListAdapter extends BaseAdapter {
 
             // On click go to room's chat
             final RelativeLayout container = (RelativeLayout)convertView.findViewById(R.id.room_row);
+
             container.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View view) {
+
                     if (view == container) {
 
                         Context context = activity.getApplicationContext();

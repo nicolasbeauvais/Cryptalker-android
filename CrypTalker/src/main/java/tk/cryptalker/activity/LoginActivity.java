@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 
 import tk.cryptalker.R;
+import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
@@ -38,7 +39,7 @@ public class LoginActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_login, R.string.login_header_title, R.menu.empty);
+        makeLayout(R.layout.activity_login, getString(R.string.login_header_title), R.menu.empty);
 
         attachPageChange(R.id.go_register, CreateAccountActivity.class);
 
@@ -76,7 +77,7 @@ public class LoginActivity extends AbstractActivity
         User user = new User();
         user.setLogin(userLogin.getText().toString());
         user.setPassword(userPassword.getText().toString());
-        user.setMobileId(getRegistrationId(context));
+        user.setMobileId(StorageFactory.getRegistrationId(context));
 
         return user;
     }
@@ -91,9 +92,9 @@ public class LoginActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        storeToken(response.getData().getString("token"));
+                        StorageFactory.storeToken(response.getData().getString("token"), context);
 
-                        getUserInfo();
+                        StorageFactory.getUserInfo(context);
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user login return parsing");

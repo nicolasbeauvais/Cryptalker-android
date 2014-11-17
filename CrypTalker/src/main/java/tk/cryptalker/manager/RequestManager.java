@@ -11,10 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import tk.cryptalker.factory.json.ResponseJsonFactory;
-import tk.cryptalker.model.Friend;
-import tk.cryptalker.model.RequestConstructor;
-import tk.cryptalker.model.Response;
-import tk.cryptalker.model.User;
+import tk.cryptalker.model.*;
 import tk.cryptalker.request.*;
 
 import java.lang.reflect.Constructor;
@@ -172,5 +169,16 @@ public class RequestManager
         requestConstructor.setListener(getGenericListener(listener));
 
         requestAbstracter(null, requestConstructor, errorListener);
+    }
+
+    public void sendMessageRequest(Message message, final Listener<Response> listener, ErrorListener errorListener)
+    {
+        RequestConstructor requestConstructor = new RequestConstructor();
+
+        requestConstructor.setVerb(Request.Method.POST);
+        requestConstructor.setRest("messages/new");
+        requestConstructor.setListener(getGenericListener(listener));
+
+        requestAbstracter(message, requestConstructor, errorListener);
     }
 }

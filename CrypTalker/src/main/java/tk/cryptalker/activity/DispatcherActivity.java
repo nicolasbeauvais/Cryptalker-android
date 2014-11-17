@@ -18,6 +18,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import tk.cryptalker.R;
 import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
@@ -43,7 +44,9 @@ public class DispatcherActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_dispatcher, R.string.app_name, R.menu.empty);
+        setContext(context);
+
+        makeLayout(R.layout.activity_dispatcher, getString(R.string.app_name), R.menu.empty);
 
         context = getApplicationContext();
 
@@ -93,13 +96,13 @@ public class DispatcherActivity extends AbstractActivity
         if (checkPlayServices()) {
 
             gcm = GoogleCloudMessaging.getInstance(this);
-            regId = getRegistrationId(context);
+            regId = StorageFactory.getRegistrationId(context);
 
             if (regId.isEmpty()) {
                 registerInBackground();
             } else {
 
-                String token = getToken();
+                String token = StorageFactory.getToken(context);
 
                 // If has token, attempt a login
                 if (!token.isEmpty()) {
@@ -165,7 +168,7 @@ public class DispatcherActivity extends AbstractActivity
                     regId = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regId;
 
-                    storeRegistrationId(context, regId);
+                    StorageFactory.storeRegistrationId(context, regId);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                 }
@@ -183,8 +186,8 @@ public class DispatcherActivity extends AbstractActivity
     private User fillValues()
     {
         User user =  new User();
-        user.setMobileId(getRegistrationId(context));
-        user.setToken(getToken());
+        user.setMobileId(StorageFactory.getRegistrationId(context));
+        user.setToken(StorageFactory.getToken(context));
 
         return user;
     }
@@ -199,9 +202,9 @@ public class DispatcherActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        storeToken(response.getData().getString("token"));
+                        StorageFactory.storeToken(response.getData().getString("token"), context);
 
-                        getUserInfo();
+                        StorageFactory.getUserInfo(context);
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");

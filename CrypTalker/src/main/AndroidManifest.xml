@@ -55,5 +55,7 @@
         <activity android:name=".activity.CreateAccountActivity" />
 
         <activity android:name=".activity.DashboardActivity" />
+
+        <activity android:name=".activity.ChatActivity" />
     </application>
 </manifest>

@@ -12,7 +12,7 @@ public class HomeActivity extends AbstractActivity
 
         super.onCreate(savedInstanceState);
 
-        makeLayout(R.layout.activity_home, R.string.app_name, R.menu.empty);
+        makeLayout(R.layout.activity_home, getString(R.string.app_name), R.menu.empty);
 
         attachPageChange(R.id.go_register, CreateAccountActivity.class);
         attachPageChange(R.id.go_login, LoginActivity.class);

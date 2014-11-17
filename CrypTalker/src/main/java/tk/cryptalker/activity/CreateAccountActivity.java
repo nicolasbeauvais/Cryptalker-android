@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 
 import tk.cryptalker.R;
+import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
@@ -40,7 +41,7 @@ public class CreateAccountActivity extends AbstractActivity
     {
         super.onCreate(saveInstanceState);
 
-        makeLayout(R.layout.activity_create_account, R.string.create_account_header_title, R.menu.empty);
+        makeLayout(R.layout.activity_create_account, getString(R.string.create_account_header_title), R.menu.empty);
 
         attachPageChange(R.id.go_login, LoginActivity.class);
 
@@ -81,7 +82,7 @@ public class CreateAccountActivity extends AbstractActivity
         user.setPseudo(userPseudo.getText().toString());
         user.setPassword(userPassword.getText().toString());
         user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
-        user.setMobileId(getRegistrationId(context));
+        user.setMobileId(StorageFactory.getRegistrationId(context));
 
         return user;
     }
@@ -96,9 +97,8 @@ public class CreateAccountActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        storeToken(response.getData().getString("token"));
-
-                        getUserInfo();
+                        StorageFactory.storeToken(response.getData().getString("token"), context);
+                        StorageFactory.getUserInfo(context);
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user create return parsing");
