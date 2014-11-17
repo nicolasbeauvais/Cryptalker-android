@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context=".CreateAccountActivity"
+                style="@style/layout_100">
+
+    <ListView
+            android:id="@+id/list"
+            style="@style/dashboard_list" />
+
+    <RelativeLayout style="@style/chat_toolbar_layout"
+                    android:layout_alignParentBottom="true">
+
+        <EditText android:id="@+id/message"
+                  style="@style/chat_toolbar_input"
+                  android:hint="@string/chat_new_message"
+                  android:layout_alignParentStart="true"
+                  android:layout_centerVertical="true"/>
+
+        <ImageButton android:id="@+id/send_message"
+                     style="@style/chat_toolbar_send"
+                     android:src="@drawable/ic_action_send_now"
+                     android:contentDescription="@string/chat_new_message_send"
+                     android:layout_alignParentEnd="true"
+                     android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

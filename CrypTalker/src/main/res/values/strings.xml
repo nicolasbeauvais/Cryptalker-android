@@ -68,4 +68,8 @@
     <string name="dashboard_tab_friend_request_accepted">You accepted the friend request</string>
     <string name="dashboard_tab_friend_request_deny">You refused the friend request</string>
     <!-- activity_dashboard -->
+
+    <!-- activity_chat -->
+    <string name="chat_new_message">Enter your text here</string>
+    <string name="chat_new_message_send">Send a new message</string>
 </resources>

@@ -3,9 +3,11 @@
     <!-- Attributes -->
     <color name="main">#33b5e5</color>
     <color name="red">#ffe54541</color>
-    <color name="white">#ffffff</color>
+    <color name="dark_grey">#ff1e1e1e</color>
     <color name="medium_grey">#464646</color>
     <color name="light_grey">#aaaaaa</color>
+    <color name="light_light_grey">#ffdedede</color>
+    <color name="white">#ffffff</color>
     <!-- /Attributes -->
 
 
@@ -191,5 +193,30 @@
         <item name="android:layout_marginLeft">10dp</item>
     </style>
     <!-- /Dashboard -->
+
+    <!-- Chat -->
+    <style name="chat_toolbar_layout">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/light_light_grey</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+    <style name="chat_toolbar_input">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">60dp</item>
+        <item name="android:color">@color/dark_grey</item>
+        <item name="android:textColorHint">@color/medium_grey</item>
+    </style>
+    <style name="chat_toolbar_send">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:background">@color/light_light_grey</item>
+    </style>
+    <!-- /Chat -->
 
 </resources>
