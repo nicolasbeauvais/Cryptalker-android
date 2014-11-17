@@ -1,5 +1,6 @@
 package tk.cryptalker.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import tk.cryptalker.R;
 import tk.cryptalker.activity.DashboardActivity;
+import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Friend;
 import tk.cryptalker.model.Response;
@@ -27,9 +29,15 @@ public class AddFriendDialogFragment extends DialogFragment
 {
     private static final String TAG = "AddFriendDialogFragment";
 
+    private Activity activity;
     private AlertDialog dialog;
     private EditText pseudo;
     private ArrayList<TextView> inputs = new ArrayList<TextView>();
+
+    public AddFriendDialogFragment(Activity activity)
+    {
+        this.activity = activity;
+    }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -70,7 +78,7 @@ public class AddFriendDialogFragment extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                if (((DashboardActivity)getActivity()).validation(inputs)) {
+                if (ValidationFactory.validation(inputs, getActivity().getBaseContext())) {
                     Friend friend = fillValues();
                     addFriend(friend);
                 }
@@ -99,7 +107,7 @@ public class AddFriendDialogFragment extends DialogFragment
                 } else {
 
                     if (response.getErrors().length() > 0) {
-                        ((DashboardActivity) getActivity()).parseJsonErrorsDialog(response.getErrors(), dialog);
+                        ValidationFactory.parseJsonErrorsDialog(response.getErrors(), dialog, activity);
                     }
                 }
             }

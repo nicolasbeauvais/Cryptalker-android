@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 
 import tk.cryptalker.R;
+import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.User;
@@ -61,7 +62,7 @@ public class LoginActivity extends AbstractActivity
             public void onClick(View v) {
 
 
-                if (validation(inputs)){
+                if (ValidationFactory.validation(inputs, context)){
 
                     User user = fillValues();
                     loginUser(user);
@@ -100,7 +101,7 @@ public class LoginActivity extends AbstractActivity
                 } else {
 
                     if (response.getErrors().length() > 0) {
-                        parseJsonErrors(response.getErrors());
+                        ValidationFactory.parseJsonErrors(response.getErrors(), LoginActivity.this);
                     }
                 }
             }
