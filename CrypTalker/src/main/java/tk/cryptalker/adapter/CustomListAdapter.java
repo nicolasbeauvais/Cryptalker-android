@@ -1,9 +1,9 @@
 package tk.cryptalker.adapter;
 
 
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.*;
 import com.android.volley.VolleyError;
 import tk.cryptalker.R;
 
@@ -14,14 +14,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
+import tk.cryptalker.activity.ChatActivity;
 import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.Room;
-import tk.cryptalker.model.User;
 
 public class CustomListAdapter extends BaseAdapter {
 
@@ -65,6 +63,22 @@ public class CustomListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.row_dashboard_invite, null);
 
             TextView name = (TextView) convertView.findViewById(R.id.name);
+
+            // On click go to room's chat
+            final RelativeLayout container = (RelativeLayout)convertView.findViewById(R.id.room_row);
+            container.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View view) {
+                    if (view == container) {
+
+                        Context context = activity.getApplicationContext();
+
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                }
+            });
 
             name.setText(room.getName());
 

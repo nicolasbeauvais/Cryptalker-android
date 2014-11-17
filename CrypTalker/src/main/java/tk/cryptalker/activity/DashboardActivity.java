@@ -49,7 +49,6 @@ public class DashboardActivity extends AbstractActivity
         adapter = new CustomListAdapter(this, roomList);
         listView.setAdapter(adapter);
 
-
         for (int i = 0; i < friend_request_received.length(); i++) {
 
             try {
