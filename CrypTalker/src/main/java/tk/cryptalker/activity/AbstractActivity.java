@@ -1,22 +1,28 @@
 package tk.cryptalker.activity;
 
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.app.ProgressDialog;
+import android.view.*;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import tk.cryptalker.R;
+import tk.cryptalker.fragment.ProgressDialogFragment;
 
 public class AbstractActivity extends Activity
 {
     private static final String TAG = "AbstractActivity";
 
+    static Activity instance;
     static Context context;
-
     private int menu;
+    private static ProgressDialog progress;
+
+    public AbstractActivity()
+    {
+        AbstractActivity.instance = this;
+    }
 
     public void makeLayout(int layout, String title, int menu)
     {
@@ -66,5 +72,16 @@ public class AbstractActivity extends Activity
 
     public static void setContext(Context context) {
         AbstractActivity.context = context;
+    }
+
+    public static void showProgress(String dialogTitle, String dialogMessage)
+    {
+        progress = ProgressDialog.show(instance, dialogTitle, dialogMessage, true);
+
+    }
+
+    public static void hideProgress()
+    {
+        progress.dismiss();
     }
 }

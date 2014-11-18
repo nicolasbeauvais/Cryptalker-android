@@ -70,16 +70,22 @@ public class RequestManager
             Log.e(TAG, "An error occurred during requestAbstracter method", e);
         }
 
-        AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), jsonData, rc.getListener(), errorListener);
+        AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), jsonData,
+                getGenericListener(rc), errorListener);
         ar.start();
     }
 
-    private Listener getGenericListener(final Listener listener)
+    private Listener getGenericListener(final RequestConstructor rc)
     {
+        if (rc.isProgressDialog()) {
+            AbstractActivity.showProgress(rc.getProgressDialogTitle(), rc.getProgressDialogMessage());
+        }
+
         return new Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject arg0) {
+
                 Response response = null;
                 try {
                     response = Response.parseFromJSONObject(arg0);
@@ -87,8 +93,12 @@ public class RequestManager
                     Log.e(TAG, "An error occurred parsing create user response", e);
                 }
 
-                if (listener != null){
-                    listener.onResponse(response);
+                if (rc.getListener() != null){
+                    rc.getListener().onResponse(response);
+                }
+
+                if (rc.isProgressDialog()) {
+                    AbstractActivity.hideProgress();
                 }
             }
         };
@@ -100,7 +110,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.POST);
         requestConstructor.setRest("users/register");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialogMessage(R.string.dialog_progress_create_account_message);
 
         requestAbstracter(user, requestConstructor, errorListener);
     }
@@ -111,7 +122,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.POST);
         requestConstructor.setRest("users/login");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialogMessage(R.string.dialog_progress_login_message);
 
         requestAbstracter(user, requestConstructor, errorListener);
     }
@@ -122,7 +134,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.POST);
         requestConstructor.setRest("users/login-with-token");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialog(false);
 
         requestAbstracter(user, requestConstructor, errorListener);
     }
@@ -133,7 +146,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.GET);
         requestConstructor.setRest("users/info");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialog(false);
 
         requestAbstracter(null, requestConstructor, errorListener);
     }
@@ -144,7 +158,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.POST);
         requestConstructor.setRest("friends/request");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialogMessage(R.string.dialog_progress_add_friend_message);
 
         requestAbstracter(friend, requestConstructor, errorListener);
     }
@@ -155,7 +170,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.GET);
         requestConstructor.setRest("friends/accept/" + String.valueOf(user_id));
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialogMessage(R.string.dialog_progress_accept_friend_message);
 
         requestAbstracter(null, requestConstructor, errorListener);
     }
@@ -166,7 +182,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.GET);
         requestConstructor.setRest("friends/refuse/" + String.valueOf(user_id));
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialogMessage(R.string.dialog_progress_refuse_friend_message);
 
         requestAbstracter(null, requestConstructor, errorListener);
     }
@@ -177,7 +194,8 @@ public class RequestManager
 
         requestConstructor.setVerb(Request.Method.POST);
         requestConstructor.setRest("messages/new");
-        requestConstructor.setListener(getGenericListener(listener));
+        requestConstructor.setListener(listener);
+        requestConstructor.setProgressDialog(false);
 
         requestAbstracter(message, requestConstructor, errorListener);
     }
