@@ -38,7 +38,6 @@ public class StorageFactory
      */
     public static void storeRegistrationId(String regId) {
 
-        Context context = AbstractActivity.getContext();
         final SharedPreferences prefs = getPreferences();
         int appVersion = getAppVersion();
 

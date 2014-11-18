@@ -34,9 +34,9 @@ public class AddFriendDialogFragment extends DialogFragment
     private EditText pseudo;
     private ArrayList<TextView> inputs = new ArrayList<TextView>();
 
-    public AddFriendDialogFragment(Activity activity)
+    public AddFriendDialogFragment()
     {
-        this.activity = activity;
+        this.activity = getActivity();
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
