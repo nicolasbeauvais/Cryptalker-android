@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.VolleyError;
 import tk.cryptalker.R;
+import tk.cryptalker.adapter.ChatListAdapter;
+import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.Response;
+import tk.cryptalker.model.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +28,11 @@ public class ChatActivity extends AbstractActivity
     ImageButton sendMessage;
     TextView message;
     private ArrayList<TextView> inputs = new ArrayList<TextView>();
+
+    private ArrayList<Message> messages;
+    private ListView listView;
+    public static ChatListAdapter adapter;
+    public static ArrayList<Message> messageList;
 
     protected void onCreate (Bundle saveInstanceState)
     {
@@ -58,6 +67,33 @@ public class ChatActivity extends AbstractActivity
                 }
             }
         });
+
+
+        makeList();
+    }
+
+    private void makeList()
+    {
+        messageList = new ArrayList<Message>();
+
+        UserInfo userInfo = CrypTalkerApplication.getUserInfo();
+        messages = userInfo.getMessagesByRoomId(roomId);
+
+        if (messages == null) {
+            return;
+        }
+
+        listView = (ListView) findViewById(R.id.list);
+        adapter = new ChatListAdapter(this, messageList);
+        listView.setAdapter(adapter);
+
+        Log.i(TAG, "There is " + String.valueOf(messages.size()) + " messages !");
+
+        for (int i = 0; i < messages.size(); i++) {
+            messageList.add(messages.get(i));
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     private void messageIsSend()
@@ -76,6 +112,10 @@ public class ChatActivity extends AbstractActivity
     }
 
     private void sendMessage(final Message message) {
+
+        // If the request fail the message is still displayed :(
+        CrypTalkerApplication.getUserInfo().addMessageToRoom(roomId, message);
+        makeList();
 
         RequestManager.getInstance(ChatActivity.this).sendMessageRequest(message, new com.android.volley.Response.Listener<Response>() {
 

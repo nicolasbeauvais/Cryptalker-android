@@ -5,9 +5,4 @@
           android:icon="@drawable/ic_action_add_person"
           android:title="@string/action_add_person"
           android:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/new_message"
-          android:icon="@drawable/ic_action_chat"
-          android:title="@string/action_chat"
-          android:showAsAction="ifRoom"/>
 </menu>

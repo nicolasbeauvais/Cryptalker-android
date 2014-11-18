@@ -1,5 +1,7 @@
 package tk.cryptalker.model;
 
+import java.util.ArrayList;
+
 public class Room
 {
     private int id;
@@ -7,6 +9,7 @@ public class Room
     private boolean isInvite;
     private int invite_id;
     private String lastMessage;
+    private ArrayList<Message> messages;
 
     public int getId() {
         return id;
@@ -46,5 +49,13 @@ public class Room
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 }

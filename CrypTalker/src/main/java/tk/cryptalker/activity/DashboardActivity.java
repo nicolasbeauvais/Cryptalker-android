@@ -9,14 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
 import tk.cryptalker.R;
-import tk.cryptalker.adapter.CustomListAdapter;
-import tk.cryptalker.factory.storage.StorageFactory;
+import tk.cryptalker.adapter.DashboardListAdapter;
+import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.fragment.AddFriendDialogFragment;
 import tk.cryptalker.model.Room;
+import tk.cryptalker.model.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +27,9 @@ public class DashboardActivity extends AbstractActivity
     private MenuItem menuItem;
 
     private ListView listView;
-    public static CustomListAdapter adapter;
-    private JSONArray friend_request_received;
-    private JSONArray rooms;
+    public static DashboardListAdapter adapter;
+    private ArrayList<Room> friend_request_received;
+    private ArrayList<Room> rooms;
     public static List<Room> roomList;
 
     @Override

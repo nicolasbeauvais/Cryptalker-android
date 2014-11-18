@@ -14,14 +14,16 @@ import com.android.volley.toolbox.Volley;
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import tk.cryptalker.model.UserInfo;
 
 public class CrypTalkerApplication extends Application
 {
+    private static UserInfo userInfo;
+
     @Override
     public void onCreate() {
         mInstance = this;
     }
-
 
     private static final String TAG = "CrypTalkerApplication";
 

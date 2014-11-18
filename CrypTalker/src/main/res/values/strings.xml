@@ -8,6 +8,16 @@
     <string name="no_apk">You need to install Android Google Play</string>
     <!-- /App Toast -->
 
+    <!-- Progress dialog -->
+    <string name="dialog_progress_default_title">Loading</string>
+    <string name="dialog_progress_default_message">Loading</string>
+    <string name="dialog_progress_create_account_message">Account creation</string>
+    <string name="dialog_progress_login_message">Login</string>
+    <string name="dialog_progress_add_friend_message">Sending invitation</string>
+    <string name="dialog_progress_accept_friend_message">Accepting invitation</string>
+    <string name="dialog_progress_refuse_friend_message">Refusing invitation</string>
+    <!-- /Progress dialog -->
+
     <!-- Dialog add friend -->
     <string name="dialog_add_friend_title">Add friend</string>
     <string name="dialog_add_friend_pseudo">Pseudo</string>
@@ -72,4 +82,5 @@
     <!-- activity_chat -->
     <string name="chat_new_message">Enter your text here</string>
     <string name="chat_new_message_send">Send a new message</string>
+    <!-- /activity_chat -->
 </resources>

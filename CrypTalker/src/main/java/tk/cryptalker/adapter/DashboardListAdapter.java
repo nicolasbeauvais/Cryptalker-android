@@ -21,15 +21,15 @@ import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.Room;
 
-public class CustomListAdapter extends BaseAdapter {
+public class DashboardListAdapter extends BaseAdapter {
 
-    private static final String TAG = "CustomListAdapter";
+    private static final String TAG = "DashboardListAdapter";
 
     private Activity activity;
     private LayoutInflater inflater;
     private List<Room> rooms;
 
-    public CustomListAdapter(Activity activity, List<Room> rooms) {
+    public DashboardListAdapter(Activity activity, List<Room> rooms) {
         this.activity = activity;
         this.rooms = rooms;
     }

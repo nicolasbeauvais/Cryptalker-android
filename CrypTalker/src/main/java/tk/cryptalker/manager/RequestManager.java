@@ -1,7 +1,9 @@
 package tk.cryptalker.manager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.support.v4.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
@@ -10,11 +12,11 @@ import com.android.volley.Response.Listener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import tk.cryptalker.factory.json.ResponseJsonFactory;
+import tk.cryptalker.R;
+import tk.cryptalker.activity.AbstractActivity;
+import tk.cryptalker.fragment.ProgressDialogFragment;
 import tk.cryptalker.model.*;
 import tk.cryptalker.request.*;
-
-import java.lang.reflect.Constructor;
 
 public class RequestManager
 {
