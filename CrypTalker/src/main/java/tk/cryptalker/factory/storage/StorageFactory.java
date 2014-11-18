@@ -27,6 +27,7 @@ public class StorageFactory {
     public static final String P_TOKEN = "token";
 
     public static final String STORAGE_FILE = "cryptalkers.storage";
+    public static final String P_USER = "user";
     public static final String P_FRIEND_REQUEST_RECEIVED = "friend_request_received";
     public static final String P_FRIEND_REQUEST_SENT = "friend_request_sent";
     public static final String P_ROOMS = "rooms";
@@ -174,16 +175,18 @@ public class StorageFactory {
             StringBuffer stringBuffer = new StringBuffer();
 
             while ((inputString = inputReader.readLine()) != null) {
-                stringBuffer.append(inputString + "\n");
+                stringBuffer.append(inputString);
             }
 
-            try {
+            Log.i(TAG, stringBuffer.toString());
 
+            try {
                 JSONObject obj = new JSONObject(stringBuffer.toString());
 
                 UserInfo userInfo = new UserInfo();
-                userInfo.setFriendRequestReceived(obj.getJSONArray(P_FRIEND_REQUEST_RECEIVED));
-                userInfo.setRooms(obj.getJSONArray(P_ROOMS));
+                userInfo.setUser(obj.optJSONObject(P_USER));
+                userInfo.setFriendRequestReceived(obj.optJSONArray(P_FRIEND_REQUEST_RECEIVED));
+                userInfo.setRooms(obj.optJSONArray(P_ROOMS));
 
                 CrypTalkerApplication.setUserInfo(userInfo);
             } catch (JSONException e) {

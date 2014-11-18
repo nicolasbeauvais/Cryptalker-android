@@ -3,11 +3,13 @@ package tk.cryptalker.model;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tk.cryptalker.application.CrypTalkerApplication;
 
 import java.util.ArrayList;
 
 public class UserInfo
 {
+    private User user = new User();
     private ArrayList<Room> friendRequestReceived = new ArrayList<Room>();
     private ArrayList<Room> rooms = new ArrayList<Room>();
 
@@ -16,8 +18,30 @@ public class UserInfo
         return friendRequestReceived;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(JSONObject user) {
+
+        try {
+            this.user.setId(Long.valueOf(user.getInt("id")));
+            this.user.setPseudo(user.getString("pseudo"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setFriendRequestReceived(JSONArray friendRequestReceived)
     {
+
+        if (friendRequestReceived == null) {
+            return;
+        }
 
         for (int i = 0; i < friendRequestReceived.length(); i++) {
 
@@ -43,6 +67,9 @@ public class UserInfo
 
     public void setRooms(JSONArray rooms)
     {
+        if (rooms == null) {
+            return;
+        }
 
         for (int i = 0; i < rooms.length(); i++) {
 
@@ -50,7 +77,7 @@ public class UserInfo
                 JSONObject obj = rooms.getJSONObject(i);
                 Room room = new Room();
 
-                room.setId(obj.getInt("room_id"));
+                room.setId(obj.getInt("id"));
                 room.setName(obj.getString("name"));
 
                 JSONArray arrayMessages = obj.getJSONArray("messages");
@@ -63,7 +90,7 @@ public class UserInfo
 
                     message.setMessage(objMessage.getString("message"));
                     message.setFrom(objMessage.getString("from"));
-                    message.setDatetime(objMessage.getString("datetime"));
+                    message.setDatetime(objMessage.optString("datetime"));
 
                     messages.add(message);
                 }
@@ -106,5 +133,12 @@ public class UserInfo
                 rooms.set(i, room);
             }
         }
+
+        commit();
+    }
+
+    private void commit()
+    {
+        CrypTalkerApplication.commitUserInfo();
     }
 }

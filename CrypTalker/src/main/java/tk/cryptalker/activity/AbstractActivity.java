@@ -7,8 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.google.gson.Gson;
+import org.json.JSONException;
+import org.json.JSONObject;
 import tk.cryptalker.R;
-import tk.cryptalker.fragment.ProgressDialogFragment;
+import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.factory.storage.StorageFactory;
 
 public class AbstractActivity extends Activity
 {

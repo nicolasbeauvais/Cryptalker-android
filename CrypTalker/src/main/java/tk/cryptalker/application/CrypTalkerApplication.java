@@ -6,14 +6,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
+import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.model.UserInfo;
 
 public class CrypTalkerApplication extends Application
@@ -85,5 +90,14 @@ public class CrypTalkerApplication extends Application
 
     public static void setUserInfo(UserInfo userInfo) {
         CrypTalkerApplication.userInfo = userInfo;
+    }
+
+    public static void commitUserInfo()
+    {
+        try {
+            StorageFactory.storeUserInfo(new JSONObject(new Gson().toJson(CrypTalkerApplication.getUserInfo())));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

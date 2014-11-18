@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
 import tk.cryptalker.R;
 import tk.cryptalker.adapter.DashboardListAdapter;
 import tk.cryptalker.application.CrypTalkerApplication;

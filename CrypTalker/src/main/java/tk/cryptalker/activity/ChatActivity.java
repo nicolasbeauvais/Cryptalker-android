@@ -94,9 +94,11 @@ public class ChatActivity extends AbstractActivity
         }
 
         adapter.notifyDataSetChanged();
+
+        resetFocus();
     }
 
-    private void messageIsSend()
+    private void resetFocus()
     {
         message.setText("");
         getWindow().getDecorView().clearFocus();
@@ -107,6 +109,7 @@ public class ChatActivity extends AbstractActivity
         Message newMessage = new Message();
         newMessage.setRoom_id(roomId);
         newMessage.setMessage(message.getText().toString());
+        newMessage.setFrom(CrypTalkerApplication.getUserInfo().getUser().getPseudo());
 
         return newMessage;
     }
@@ -124,7 +127,6 @@ public class ChatActivity extends AbstractActivity
 
                 if (response.isSuccess()) {
 
-                    messageIsSend();
                 } else {
 
                     if (response.getErrors().length() > 0) {
