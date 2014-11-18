@@ -171,6 +171,10 @@ public class DispatcherActivity extends AbstractActivity
                     msg = "Device registered, registration ID=" + regId;
 
                     StorageFactory.storeRegistrationId(regId);
+
+                    Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                 }
