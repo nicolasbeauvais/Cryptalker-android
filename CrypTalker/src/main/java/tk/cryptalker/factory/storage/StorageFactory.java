@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.util.Log;
 import com.android.volley.VolleyError;
 import org.json.JSONArray;
@@ -15,12 +16,19 @@ import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class StorageFactory
 {
     private static final String TAG = "StorageFactory";
     private static final String P_APP_VERSION = "appVersion";
     public static final String P_REG_ID = "registration_id";
     public static final String P_TOKEN = "token";
+
+    public static final String STORAGE_FILE = "cryptalkers.storage";
     public static final String P_FRIEND_REQUEST_RECEIVED = "friend_request_received";
     public static final String P_FRIEND_REQUEST_SENDED = "friend_request_sended";
     public static final String P_ROOMS = "rooms";
@@ -136,24 +144,38 @@ public class StorageFactory
     }
 
     public static void storeUserInfo(JSONObject data, Context context) throws JSONException {
-        final SharedPreferences prefs = getPreferences(context);
+        FileOutputStream outputStream;
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(P_FRIEND_REQUEST_RECEIVED, data.getJSONArray("friend_request_received").toString());
-        editor.putString(P_FRIEND_REQUEST_SENDED, data.getJSONArray("friend_request_sended").toString());
-        editor.putString(P_ROOMS, data.getJSONArray("rooms").toString());
-        editor.commit();
+        try {
+            outputStream = context.openFileOutput(STORAGE_FILE, Context.MODE_PRIVATE);
+            outputStream.write(data.toString().getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static JSONArray getUserInfo(String key, Context context) {
-        final SharedPreferences prefs = getPreferences(context);
-        String data = prefs.getString(key, "");
 
         try {
-            JSONArray jsonData = new JSONArray(data);
-            return jsonData;
-        } catch (JSONException e) {
-            return new JSONArray();
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(
+                    context.openFileInput(STORAGE_FILE)));
+            String inputString;
+            StringBuffer stringBuffer = new StringBuffer();
+            while ((inputString = inputReader.readLine()) != null) {
+                stringBuffer.append(inputString + "\n");
+            }
+
+            try {
+                JSONObject obj = new JSONObject(stringBuffer.toString());
+                return obj.getJSONArray(key);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 }

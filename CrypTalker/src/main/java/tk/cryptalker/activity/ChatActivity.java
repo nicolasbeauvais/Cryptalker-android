@@ -60,6 +60,12 @@ public class ChatActivity extends AbstractActivity
         });
     }
 
+    private void messageIsSend()
+    {
+        message.setText("");
+        getWindow().getDecorView().clearFocus();
+    }
+
     private Message fillValues()
     {
         Message newMessage = new Message();
@@ -69,7 +75,7 @@ public class ChatActivity extends AbstractActivity
         return newMessage;
     }
 
-    private void sendMessage(final Message message){
+    private void sendMessage(final Message message) {
 
         RequestManager.getInstance(ChatActivity.this).sendMessageRequest(message, new com.android.volley.Response.Listener<Response>() {
 
@@ -78,7 +84,7 @@ public class ChatActivity extends AbstractActivity
 
                 if (response.isSuccess()) {
 
-                    Log.i(TAG, "Success send message");
+                    messageIsSend();
                 } else {
 
                     if (response.getErrors().length() > 0) {
