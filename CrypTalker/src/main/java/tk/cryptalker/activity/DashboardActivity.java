@@ -44,54 +44,31 @@ public class DashboardActivity extends AbstractActivity
 
     private void initView()
     {
-        friend_request_received = StorageFactory.getUserInfo(StorageFactory.P_FRIEND_REQUEST_RECEIVED);
-        rooms = StorageFactory.getUserInfo(StorageFactory.P_ROOMS);
+        UserInfo userInfo = CrypTalkerApplication.getUserInfo();
+
+        friend_request_received = userInfo.getFriendRequestReceived();
+        rooms = userInfo.getRooms();
 
         roomList = new ArrayList<Room>();
 
         listView = (ListView) findViewById(R.id.list);
-        adapter = new CustomListAdapter(this, roomList);
+        adapter = new DashboardListAdapter(this, roomList);
         listView.setAdapter(adapter);
 
-        for (int i = 0; i < friend_request_received.length(); i++) {
-
-            try {
-                JSONObject obj = friend_request_received.getJSONObject(i);
-                Room room = new Room();
-
-                room.setName(obj.getString("pseudo"));
-                room.setInvite(true);
-                room.setInviteId(obj.getInt("id"));
-
-                roomList.add(room);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        for (int i = 0; i < friend_request_received.size(); i++) {
+            roomList.add(friend_request_received.get(i));
         }
 
-        for (int i = 0; i < rooms.length(); i++) {
-
-            try {
-                JSONObject obj = rooms.getJSONObject(i);
-                Room room = new Room();
-
-                room.setId(obj.getInt("room_id"));
-                room.setName(obj.getString("name"));
-                room.setInvite(false);
-
-                roomList.add(room);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        for (int i = 0; i < rooms.size(); i++) {
+            roomList.add(rooms.get(i));
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View v, int position, long lo){
+            public void onItemClick(AdapterView<?> adapterView, View v, int position, long lo) {
 
-                Room item = (Room)adapter.getItem(position);
+                Room item = (Room) adapter.getItem(position);
 
                 Intent intent = new Intent(context, ChatActivity.class);
                 Bundle b = new Bundle();
@@ -100,8 +77,6 @@ public class DashboardActivity extends AbstractActivity
                 intent.putExtras(b);
                 startActivity(intent);
             }
-
-
         });
 
         adapter.notifyDataSetChanged();

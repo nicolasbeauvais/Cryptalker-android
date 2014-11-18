@@ -76,4 +76,12 @@ public class CrypTalkerApplication extends Application
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
+
+    public static UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public static void setUserInfo(UserInfo userInfo) {
+        CrypTalkerApplication.userInfo = userInfo;
+    }
 }

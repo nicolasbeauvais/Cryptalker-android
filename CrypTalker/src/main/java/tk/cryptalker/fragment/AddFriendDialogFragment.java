@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
 import tk.cryptalker.R;
-import tk.cryptalker.activity.DashboardActivity;
+import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Friend;

@@ -106,9 +106,11 @@ public class DispatcherActivity extends AbstractActivity
 
                 // If has token, attempt a login
                 if (!token.isEmpty()) {
+
                     User user = fillValues();
                     loginWithTokenUser(user);
                 } else {
+
                     Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);

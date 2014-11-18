@@ -13,16 +13,14 @@ import org.json.JSONObject;
 import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.activity.HomeActivity;
+import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Response;
+import tk.cryptalker.model.UserInfo;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
-public class StorageFactory
-{
+public class StorageFactory {
     private static final String TAG = "StorageFactory";
     private static final String P_APP_VERSION = "appVersion";
     public static final String P_REG_ID = "registration_id";
@@ -88,9 +86,20 @@ public class StorageFactory
         }
     }
 
-    public static void getUserInfo()
-    {
+    public static void getUserInfo() {
         final Context context = AbstractActivity.getContext();
+
+        File f = context.getFileStreamPath(STORAGE_FILE);
+        if (f.length() > 0) {
+
+            initialiseUserInfo();
+
+            Intent intent = new Intent(context, DashboardActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+            return;
+        }
 
         RequestManager.getInstance(DashboardActivity.getContext()).getUserInfo(new com.android.volley.Response.Listener<Response>() {
 
@@ -151,9 +160,11 @@ public class StorageFactory
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        initialiseUserInfo();
     }
 
-    public static JSONArray getUserInfo(String key) {
+    private static void initialiseUserInfo() {
 
         Context context = AbstractActivity.getContext();
 
@@ -169,7 +180,12 @@ public class StorageFactory
             try {
 
                 JSONObject obj = new JSONObject(stringBuffer.toString());
-                return obj.getJSONArray(key);
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.setFriendRequestReceived(obj.getJSONArray(P_FRIEND_REQUEST_RECEIVED));
+                userInfo.setRooms(obj.getJSONArray(P_ROOMS));
+
+                CrypTalkerApplication.setUserInfo(userInfo);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -177,7 +193,5 @@ public class StorageFactory
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 }
