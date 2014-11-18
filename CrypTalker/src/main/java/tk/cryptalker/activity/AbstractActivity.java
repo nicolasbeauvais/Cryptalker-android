@@ -1,6 +1,5 @@
 package tk.cryptalker.activity;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.app.Activity;
