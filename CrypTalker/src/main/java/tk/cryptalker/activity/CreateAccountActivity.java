@@ -82,7 +82,7 @@ public class CreateAccountActivity extends AbstractActivity
         user.setPseudo(userPseudo.getText().toString());
         user.setPassword(userPassword.getText().toString());
         user.setPasswordConfirmation(userPasswordConfirmation.getText().toString());
-        user.setMobileId(StorageFactory.getRegistrationId(context));
+        user.setMobileId(StorageFactory.getRegistrationId());
 
         return user;
     }
@@ -97,8 +97,8 @@ public class CreateAccountActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        StorageFactory.storeToken(response.getData().getString("token"), context);
-                        StorageFactory.getUserInfo(context);
+                        StorageFactory.storeToken(response.getData().getString("token"));
+                        StorageFactory.getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user create return parsing");

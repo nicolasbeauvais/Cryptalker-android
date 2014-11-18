@@ -96,13 +96,13 @@ public class DispatcherActivity extends AbstractActivity
         if (checkPlayServices()) {
 
             gcm = GoogleCloudMessaging.getInstance(this);
-            regId = StorageFactory.getRegistrationId(context);
+            regId = StorageFactory.getRegistrationId();
 
             if (regId.isEmpty()) {
                 registerInBackground();
             } else {
 
-                String token = StorageFactory.getToken(context);
+                String token = StorageFactory.getToken();
 
                 // If has token, attempt a login
                 if (!token.isEmpty()) {
@@ -168,7 +168,7 @@ public class DispatcherActivity extends AbstractActivity
                     regId = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regId;
 
-                    StorageFactory.storeRegistrationId(context, regId);
+                    StorageFactory.storeRegistrationId(regId);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
                 }
@@ -186,8 +186,8 @@ public class DispatcherActivity extends AbstractActivity
     private User fillValues()
     {
         User user =  new User();
-        user.setMobileId(StorageFactory.getRegistrationId(context));
-        user.setToken(StorageFactory.getToken(context));
+        user.setMobileId(StorageFactory.getRegistrationId());
+        user.setToken(StorageFactory.getToken());
 
         return user;
     }
@@ -202,9 +202,9 @@ public class DispatcherActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        StorageFactory.storeToken(response.getData().getString("token"), context);
+                        StorageFactory.storeToken(response.getData().getString("token"));
 
-                        StorageFactory.getUserInfo(context);
+                        StorageFactory.getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");

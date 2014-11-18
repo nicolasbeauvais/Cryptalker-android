@@ -44,8 +44,8 @@ public class DashboardActivity extends AbstractActivity
 
     private void initView()
     {
-        friend_request_received = StorageFactory.getUserInfo(StorageFactory.P_FRIEND_REQUEST_RECEIVED, context);
-        rooms = StorageFactory.getUserInfo(StorageFactory.P_ROOMS, context);
+        friend_request_received = StorageFactory.getUserInfo(StorageFactory.P_FRIEND_REQUEST_RECEIVED);
+        rooms = StorageFactory.getUserInfo(StorageFactory.P_ROOMS);
 
         roomList = new ArrayList<Room>();
 

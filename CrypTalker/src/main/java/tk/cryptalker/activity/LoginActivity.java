@@ -77,7 +77,7 @@ public class LoginActivity extends AbstractActivity
         User user = new User();
         user.setLogin(userLogin.getText().toString());
         user.setPassword(userPassword.getText().toString());
-        user.setMobileId(StorageFactory.getRegistrationId(context));
+        user.setMobileId(StorageFactory.getRegistrationId());
 
         return user;
     }
@@ -92,9 +92,9 @@ public class LoginActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
-                        StorageFactory.storeToken(response.getData().getString("token"), context);
+                        StorageFactory.storeToken(response.getData().getString("token"));
 
-                        StorageFactory.getUserInfo(context);
+                        StorageFactory.getUserInfo();
 
                     } catch (JSONException e) {
                         Log.i(TAG, "JSON Exception on user login return parsing");

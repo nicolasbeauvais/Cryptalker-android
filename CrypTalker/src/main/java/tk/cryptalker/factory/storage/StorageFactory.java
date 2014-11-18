@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.manager.RequestManager;
@@ -30,19 +31,17 @@ public class StorageFactory
 
     public static final String STORAGE_FILE = "cryptalkers.storage";
     public static final String P_FRIEND_REQUEST_RECEIVED = "friend_request_received";
-    public static final String P_FRIEND_REQUEST_SENDED = "friend_request_sended";
+    public static final String P_FRIEND_REQUEST_SENT = "friend_request_sent";
     public static final String P_ROOMS = "rooms";
 
     /**
      * Stores the registration ID and the app versionCode in the application's
-     * {@code SharedPreferences}.
-     *
-     * @param context application's context.
-     * @param regId registration ID
      */
-    public static void storeRegistrationId(Context context, String regId) {
-        final SharedPreferences prefs = getPreferences(context);
-        int appVersion = getAppVersion(context);
+    public static void storeRegistrationId(String regId) {
+
+        Context context = AbstractActivity.getContext();
+        final SharedPreferences prefs = getPreferences();
+        int appVersion = getAppVersion();
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_REG_ID, regId);
@@ -53,37 +52,34 @@ public class StorageFactory
     /**
      * Gets the current registration ID for application on GCM service, if there is one.
      * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     *         registration ID.
      */
-    public static String getRegistrationId(Context context) {
-        final SharedPreferences prefs = getPreferences(context);
+    public static String getRegistrationId() {
+
+        Context context = AbstractActivity.getContext();
+        final SharedPreferences prefs = getPreferences();
         String registrationId = prefs.getString(P_REG_ID, "");
+
         if (registrationId.isEmpty()) {
             return "";
         }
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing regID is not guaranteed to work with the new
-        // app version.
+
         int registeredVersion = prefs.getInt(P_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = getAppVersion(context);
+        int currentVersion = getAppVersion();
+
         if (registeredVersion != currentVersion) {
             return "";
         }
         return registrationId;
     }
 
-    /**
-     * @return Application's {@code SharedPreferences}.
-     */
-    public static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences("CrypTalker", Context.MODE_PRIVATE);
+
+    public static SharedPreferences getPreferences() {
+        return AbstractActivity.getContext().getSharedPreferences("CrypTalker", Context.MODE_PRIVATE);
     }
-    /**
-     * @return Application's version code from the {@code PackageManager}.
-     */
-    public static int getAppVersion(Context context) {
+
+    public static int getAppVersion() {
+
+        Context context = AbstractActivity.getContext();
 
         try {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -94,8 +90,10 @@ public class StorageFactory
         }
     }
 
-    public static void getUserInfo(final Context context)
+    public static void getUserInfo()
     {
+        final Context context = AbstractActivity.getContext();
+
         RequestManager.getInstance(DashboardActivity.getContext()).getUserInfo(new com.android.volley.Response.Listener<Response>() {
 
             @Override
@@ -104,7 +102,7 @@ public class StorageFactory
                 if (response.isSuccess()) {
 
                     try {
-                        storeUserInfo(response.getData(), context);
+                        storeUserInfo(response.getData());
 
                         Intent intent = new Intent(context, DashboardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -128,23 +126,25 @@ public class StorageFactory
         });
     }
 
-    public static void storeToken(String token, Context context) {
-        final SharedPreferences prefs = getPreferences(context);
+    public static void storeToken(String token) {
+
+        final SharedPreferences prefs = getPreferences();
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_TOKEN, token);
         editor.commit();
     }
 
-    public static String getToken(Context context) {
-        final SharedPreferences prefs = getPreferences(context);
+    public static String getToken() {
+        final SharedPreferences prefs = getPreferences();
         String token = prefs.getString(P_TOKEN, "");
 
         return token;
     }
 
-    public static void storeUserInfo(JSONObject data, Context context) throws JSONException {
+    public static void storeUserInfo(JSONObject data) throws JSONException {
         FileOutputStream outputStream;
+        Context context = AbstractActivity.getContext();
 
         try {
             outputStream = context.openFileOutput(STORAGE_FILE, Context.MODE_PRIVATE);
@@ -155,23 +155,27 @@ public class StorageFactory
         }
     }
 
-    public static JSONArray getUserInfo(String key, Context context) {
+    public static JSONArray getUserInfo(String key) {
+
+        Context context = AbstractActivity.getContext();
 
         try {
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(
-                    context.openFileInput(STORAGE_FILE)));
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(context.openFileInput(STORAGE_FILE)));
             String inputString;
             StringBuffer stringBuffer = new StringBuffer();
+
             while ((inputString = inputReader.readLine()) != null) {
                 stringBuffer.append(inputString + "\n");
             }
 
             try {
+
                 JSONObject obj = new JSONObject(stringBuffer.toString());
                 return obj.getJSONArray(key);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
