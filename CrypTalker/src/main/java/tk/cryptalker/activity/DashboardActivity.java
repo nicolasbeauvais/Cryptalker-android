@@ -53,12 +53,12 @@ public class DashboardActivity extends AbstractActivity
         adapter = new DashboardListAdapter(this, roomList);
         listView.setAdapter(adapter);
 
-        for (int i = 0; i < friend_request_received.size(); i++) {
-            roomList.add(friend_request_received.get(i));
+        for (Room aFriend_request_received : friend_request_received) {
+            roomList.add(aFriend_request_received);
         }
 
-        for (int i = 0; i < rooms.size(); i++) {
-            roomList.add(rooms.get(i));
+        for (Room room : rooms) {
+            roomList.add(room);
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){

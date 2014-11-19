@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import com.android.volley.VolleyError;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tk.cryptalker.activity.AbstractActivity;
@@ -52,7 +51,6 @@ public class StorageFactory {
      */
     public static String getRegistrationId() {
 
-        Context context = AbstractActivity.getContext();
         final SharedPreferences prefs = getPreferences();
         String registrationId = prefs.getString(P_REG_ID, "");
 
@@ -140,7 +138,7 @@ public class StorageFactory {
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(P_TOKEN, token);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getToken() {

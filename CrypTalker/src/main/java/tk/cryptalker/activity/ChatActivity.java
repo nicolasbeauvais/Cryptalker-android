@@ -125,9 +125,7 @@ public class ChatActivity extends AbstractActivity
             @Override
             public void onResponse(Response response) {
 
-                if (response.isSuccess()) {
-
-                } else {
+                if (!response.isSuccess()) {
 
                     if (response.getErrors().length() > 0) {
                         ValidationFactory.parseJsonErrors(response.getErrors(), ChatActivity.this);

@@ -66,11 +66,11 @@ public class ValidationFactory
     public static SpannableStringBuilder errorMessage(String string)
     {
         int color = Color.RED;
-        ForegroundColorSpan fgcspan = new ForegroundColorSpan(color);
-        SpannableStringBuilder ssbuilder = new SpannableStringBuilder(string);
-        ssbuilder.setSpan(fgcspan, 0, string.length(), 0);
+        ForegroundColorSpan fgcSpan = new ForegroundColorSpan(color);
+        SpannableStringBuilder ssBuilder = new SpannableStringBuilder(string);
+        ssBuilder.setSpan(fgcSpan, 0, string.length(), 0);
 
-        return ssbuilder;
+        return ssBuilder;
     }
 
     public static void parseJsonErrors(JSONObject errors, Activity activity)
