@@ -34,10 +34,11 @@
     <string name="action_add_person">New friend request</string>
     <string name="action_chat">New friend request</string>
     <string name="action_add_person_to_room">Add a friend to the chat</string>
+    <string name="action_parameter">Parameters</string>
     <!-- /Action Bar -->
 
     <!-- activity_dispatcher -->
-    <string name="dispatcher_loading">Loading...</string>
+    <string name="dispatcher_loading">Loading…</string>
     <string name="dispatcher_reload">Reload</string>
     <!-- activity_dispatcher -->
 
@@ -83,4 +84,9 @@
     <string name="chat_new_message">Enter your text here</string>
     <string name="chat_new_message_send">Send a new message</string>
     <!-- /activity_chat -->
+
+    <!-- Parameters -->
+    <string name="parameter_header_title">Parameters</string>
+    <!-- /Parameters -->
+    
 </resources>

@@ -5,4 +5,8 @@
           android:icon="@drawable/ic_action_add_person"
           android:title="@string/action_add_person"
           android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/parameters"
+          android:title="@string/action_parameter"
+          android:showAsAction="never"/>
 </menu>

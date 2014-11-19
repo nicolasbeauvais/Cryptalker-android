@@ -1,4 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       android:theme="@style/menu">
 
+      <item android:id="@+id/parameters"
+            android:title="@string/action_parameter"
+            android:showAsAction="never"/>
+
 </menu>
