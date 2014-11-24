@@ -51,14 +51,23 @@ public class GcmIntentService extends IntentService
                 sendNotification("Deleted messages on server: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                //@TODO: we get gcm pus before the app is initialised (null userInfo) :(
-
                 // "Switch" push type
                 String type = extras.getString("type");
 
                 if (type.equals("new_message")) {
                     UserInfo userInfo = CrypTalkerApplication.getUserInfo();
 
+                    // If the app isn't initialised yet, just wait a little...
+                    try {
+                        while (userInfo == null) {
+                            Thread.sleep(5000);
+                            userInfo = CrypTalkerApplication.getUserInfo();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Add a new message to UserInfo + send a new message event
                     Message message = new Message();
                     message.setFrom(extras.getString("from_user"));
                     message.setMessage(extras.getString("message"));
@@ -69,7 +78,7 @@ public class GcmIntentService extends IntentService
                     Log.i(TAG, "Message received: " + extras.getString("message"));
 
                     if (ChatActivity.isActive() && ChatActivity.getRoomId() == extras.getInt("room_id")) {
-                        //@TODO: restart activity
+                        //@TODO: launch event with the new message + catch the event in the chat activity !
                     }
                 }
 
