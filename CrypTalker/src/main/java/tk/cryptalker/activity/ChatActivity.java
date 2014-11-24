@@ -22,7 +22,10 @@ import java.util.Arrays;
 public class ChatActivity extends AbstractActivity
 {
     private static final String TAG = "ChatActivity";
-    private int roomId;
+
+    private static boolean active;
+    private static int roomId;
+
     private String roomName;
 
     ImageButton sendMessage;
@@ -40,8 +43,10 @@ public class ChatActivity extends AbstractActivity
 
         Bundle b = getIntent().getExtras();
 
-        this.roomId = b.getInt("roomId");
+        roomId = b.getInt("roomId");
         this.roomName = b.getString("roomName");
+
+        active = true;
 
         makeLayout(R.layout.activity_chat, roomName, R.menu.room);
 
@@ -94,14 +99,6 @@ public class ChatActivity extends AbstractActivity
         }
 
         adapter.notifyDataSetChanged();
-
-        resetFocus();
-    }
-
-    private void resetFocus()
-    {
-        message.setText("");
-        getWindow().getDecorView().clearFocus();
     }
 
     private Message fillValues()
@@ -114,11 +111,17 @@ public class ChatActivity extends AbstractActivity
         return newMessage;
     }
 
+    private void resetInput()
+    {
+        message.setText("");
+    }
+
     private void sendMessage(final Message message) {
 
         // If the request fail the message is still displayed :(
         CrypTalkerApplication.getUserInfo().addMessageToRoom(roomId, message);
         makeList();
+        resetInput();
 
         RequestManager.getInstance(ChatActivity.this).sendMessageRequest(message, new com.android.volley.Response.Listener<Response>() {
 
@@ -139,5 +142,35 @@ public class ChatActivity extends AbstractActivity
                 Log.i(TAG, "Error during the request => " + error.toString());
             }
         });
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        active = true;
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        active = false;
+    }
+
+    public static boolean isActive() {
+        return active;
+    }
+
+    public static void setActive(boolean active) {
+        ChatActivity.active = active;
+    }
+
+    public static int getRoomId() {
+        return roomId;
+    }
+
+    public static void setRoomId(int roomId) {
+        ChatActivity.roomId = roomId;
     }
 }

@@ -207,6 +207,9 @@
     <!-- /Dashboard -->
 
     <!-- Chat -->
+    <style name="chat_list" parent="dashboard_list">
+        <item name="android:paddingBottom">60dp</item>
+    </style>
     <style name="chat_toolbar_layout">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

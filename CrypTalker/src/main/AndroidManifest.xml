@@ -57,6 +57,7 @@
         <activity android:name=".activity.DashboardActivity" />
 
         <activity android:name=".activity.ChatActivity" />
+
         <activity android:name=".activity.ParameterActivity"/>
     </application>
 </manifest>

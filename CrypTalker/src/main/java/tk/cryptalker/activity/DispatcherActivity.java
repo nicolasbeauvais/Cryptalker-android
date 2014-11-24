@@ -122,14 +122,6 @@ public class DispatcherActivity extends AbstractActivity
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Check device for Play Services APK.
-        checkPlayServices();
-    }
-
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -208,11 +200,11 @@ public class DispatcherActivity extends AbstractActivity
                 if (response.isSuccess()) {
 
                     try {
+
                         StorageFactory.storeToken(response.getData().getString("token"));
-
                         StorageFactory.getUserInfo();
-
                     } catch (JSONException e) {
+
                         Log.i(TAG, "JSON Exception on user loginWithTokenUser return parsing");
                     }
                 } else {
@@ -233,5 +225,4 @@ public class DispatcherActivity extends AbstractActivity
             }
         });
     }
-
 }

@@ -12,7 +12,11 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import tk.cryptalker.activity.ChatActivity;
 import tk.cryptalker.activity.HomeActivity;
+import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.model.Message;
+import tk.cryptalker.model.UserInfo;
 
 public class GcmIntentService extends IntentService
 {
@@ -25,7 +29,7 @@ public class GcmIntentService extends IntentService
         super("GcmIntentService");
     }
 
-    public static final String TAG = "GCM";
+    public static final String TAG = "GcmIntentService";
 
     @Override
     protected void onHandleIntent(Intent intent)
@@ -47,22 +51,28 @@ public class GcmIntentService extends IntentService
                 sendNotification("Deleted messages on server: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                // This loop represents the service doing some work.
-                for (int i = 0; i < 5; i++) {
-                    Log.i(TAG, "Working... " + (i + 1)
-                            + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
+                //@TODO: we get gcm pus before the app is initialised (null userInfo) :(
 
+                // "Switch" push type
+                String type = extras.getString("type");
+
+                if (type.equals("new_message")) {
+                    UserInfo userInfo = CrypTalkerApplication.getUserInfo();
+
+                    Message message = new Message();
+                    message.setFrom(extras.getString("from_user"));
+                    message.setMessage(extras.getString("message"));
+                    message.setDatetime(extras.getString("date"));
+
+                    userInfo.addMessageToRoom(extras.getInt("room_id"), message);
+
+                    Log.i(TAG, "Message received: " + extras.getString("message"));
+
+                    if (ChatActivity.isActive() && ChatActivity.getRoomId() == extras.getInt("room_id")) {
+                        //@TODO: restart activity
                     }
                 }
 
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
-
-                // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
-                Log.i(TAG, "Received: " + extras.toString());
             }
         }
 
@@ -76,6 +86,7 @@ public class GcmIntentService extends IntentService
      * a GCM message.
      */
     private void sendNotification(String msg) {
+        Log.i(TAG, msg);
         mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, HomeActivity.class), 0);

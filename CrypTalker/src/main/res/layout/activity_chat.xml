@@ -5,7 +5,9 @@
 
     <ListView
             android:id="@+id/list"
-            style="@style/dashboard_list" />
+            style="@style/chat_list"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"/>
 
     <RelativeLayout style="@style/chat_toolbar_layout"
                     android:layout_alignParentBottom="true">
