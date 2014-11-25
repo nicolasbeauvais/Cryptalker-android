@@ -6,12 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import de.greenrobot.event.EventBus;
 import tk.cryptalker.activity.ChatActivity;
 import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
@@ -51,37 +51,12 @@ public class GcmIntentService extends IntentService
                 sendNotification("Deleted messages on server: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                // "Switch" push type
+                // Get push type
                 String type = extras.getString("type");
 
                 if (type.equals("new_message")) {
-                    UserInfo userInfo = CrypTalkerApplication.getUserInfo();
-
-                    // If the app isn't initialised yet, just wait a little...
-                    try {
-                        while (userInfo == null) {
-                            Thread.sleep(5000);
-                            userInfo = CrypTalkerApplication.getUserInfo();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Add a new message to UserInfo + send a new message event
-                    Message message = new Message();
-                    message.setFrom(extras.getString("from_user"));
-                    message.setMessage(extras.getString("message"));
-                    message.setDatetime(extras.getString("date"));
-
-                    userInfo.addMessageToRoom(extras.getInt("room_id"), message);
-
-                    Log.i(TAG, "Message received: " + extras.getString("message"));
-
-                    if (ChatActivity.isActive() && ChatActivity.getRoomId() == extras.getInt("room_id")) {
-                        //@TODO: launch event with the new message + catch the event in the chat activity !
-                    }
+                    newMessage(extras);
                 }
-
             }
         }
 
@@ -107,5 +82,40 @@ public class GcmIntentService extends IntentService
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    }
+
+    private void newMessage(Bundle extras)
+    {
+        UserInfo userInfo = CrypTalkerApplication.getUserInfo();
+
+        // If the app isn't initialised yet, just wait a little...
+        try {
+            while (userInfo == null) {
+                Thread.sleep(5000);
+                userInfo = CrypTalkerApplication.getUserInfo();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Add a new message to UserInfo + send a new message event
+        Message message = new Message();
+        message.setFrom(extras.getString("from_user"));
+        message.setMessage(extras.getString("message"));
+        message.setDatetime(extras.getString("date"));
+
+        int roomId = extras.getInt("room_id");
+
+        // Store the new message to UserInfo
+        userInfo.addMessageToRoom(roomId, message);
+
+        Log.i(TAG, "Message received: " + message.getMessage());
+
+        if (ChatActivity.isActive() && ChatActivity.getRoomId() == extras.getInt("room_id")) {
+            EventBus messageEvent = CrypTalkerApplication.getMessageEvent();
+            messageEvent.post(message);
+        } else {
+            sendNotification(message.getMessage());
+        }
     }
 }

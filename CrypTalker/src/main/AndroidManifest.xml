@@ -5,7 +5,7 @@
 
     <uses-sdk
             android:minSdkVersion="17"
-            android:targetSdkVersion="17"/>
+            android:targetSdkVersion="21"/>
 
     <permission android:name="tk.cryptalker.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 

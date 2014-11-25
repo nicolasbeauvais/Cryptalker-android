@@ -16,6 +16,7 @@ import tk.cryptalker.model.Message;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.UserInfo;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,6 +54,12 @@ public class ChatActivity extends AbstractActivity
         initView();
     }
 
+    public void onEvent(Message message)
+    {
+        // Refresh the listView
+        makeList();
+    }
+
     private void initView()
     {
         sendMessage = (ImageButton)findViewById(R.id.send_message);
@@ -72,7 +79,6 @@ public class ChatActivity extends AbstractActivity
                 }
             }
         });
-
 
         makeList();
     }
@@ -94,8 +100,8 @@ public class ChatActivity extends AbstractActivity
 
         Log.i(TAG, "There is " + String.valueOf(messages.size()) + " messages !");
 
-        for (int i = 0; i < messages.size(); i++) {
-            messageList.add(messages.get(i));
+        for (Message message1 : messages) {
+            messageList.add(message1);
         }
 
         adapter.notifyDataSetChanged();

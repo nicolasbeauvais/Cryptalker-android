@@ -12,11 +12,13 @@ import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import de.greenrobot.event.EventBus;
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tk.cryptalker.activity.ChatActivity;
 import tk.cryptalker.factory.storage.StorageFactory;
 import tk.cryptalker.model.UserInfo;
 
@@ -24,9 +26,13 @@ public class CrypTalkerApplication extends Application
 {
     private static UserInfo userInfo;
 
+    private static EventBus messageEvent;
+
     @Override
     public void onCreate() {
         mInstance = this;
+
+//        EventBus.getDefault().register(ChatActivity.class);
     }
 
     private static final String TAG = "CrypTalkerApplication";
@@ -98,5 +104,9 @@ public class CrypTalkerApplication extends Application
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public static EventBus getMessageEvent() {
+        return messageEvent;
     }
 }
