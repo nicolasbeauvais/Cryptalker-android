@@ -5,19 +5,28 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import de.greenrobot.event.EventBus;
+import tk.cryptalker.R;
+import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.activity.ChatActivity;
+import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.event.MessageEvent;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.UserInfo;
+
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;;
 
 public class GcmIntentService extends IntentService
 {
@@ -46,10 +55,10 @@ public class GcmIntentService extends IntentService
 
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
 
-                sendNotification("Send error: " + extras.toString());
+                sendNotification("Error", "Send error: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
 
-                sendNotification("Deleted messages on server: " + extras.toString());
+                sendNotification("Error", "Deleted messages on server: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
                 // Get push type
@@ -70,19 +79,43 @@ public class GcmIntentService extends IntentService
      * This is just one simple example of what you might choose to do with
      * a GCM message.
      */
-    private void sendNotification(String msg) {
-        Log.i(TAG, msg);
-        mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+    private void sendNotification(String title, String message) {
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, HomeActivity.class), 0);
+        int notificationId = 001;
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("GCM Notification")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-                .setContentText(msg);
+        // Build intent for notification content
+        Intent viewIntent = new Intent(this, ChatActivity.class);
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
 
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setContentIntent(viewPendingIntent)
+                .setVibrate(new long[]{0, 600, 1000})
+                .setLights(Color.BLUE, 3000, 3000);
+
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // Build the notification and issues it with notification manager.
+        notificationManager.notify(notificationId, notificationBuilder.build());
+
+        // Wake screen
+        PowerManager pm = (PowerManager)AbstractActivity.getContext().getSystemService(Context.POWER_SERVICE);
+
+        boolean isScreenOn = pm.isScreenOn();
+
+        if (!isScreenOn)
+        {
+
+            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK |PowerManager.ACQUIRE_CAUSES_WAKEUP |PowerManager.ON_AFTER_RELEASE, "MyLock");
+
+            wl.acquire(10000);
+            PowerManager.WakeLock wl_cpu = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MyCpuLock");
+
+            wl_cpu.acquire(10000);
+        }
     }
 
     private void newMessage(Bundle extras)
@@ -118,7 +151,7 @@ public class GcmIntentService extends IntentService
 
             EventBus.getDefault().post(messageEvent);
         } else {
-            sendNotification(message.getMessage());
+            sendNotification(message.getFrom(), message.getMessage());
         }
     }
 }
