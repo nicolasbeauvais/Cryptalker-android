@@ -44,6 +44,10 @@ public class DashboardActivity extends AbstractActivity
     {
         UserInfo userInfo = CrypTalkerApplication.getUserInfo();
 
+        if (userInfo == null) {
+            return;
+        }
+
         friend_request_received = userInfo.getFriendRequestReceived();
         rooms = userInfo.getRooms();
 

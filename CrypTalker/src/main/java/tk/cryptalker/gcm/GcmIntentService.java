@@ -15,6 +15,7 @@ import de.greenrobot.event.EventBus;
 import tk.cryptalker.activity.ChatActivity;
 import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.event.MessageEvent;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.UserInfo;
 
@@ -98,22 +99,24 @@ public class GcmIntentService extends IntentService
             e.printStackTrace();
         }
 
+        int roomId = Integer.parseInt(extras.getString("room_id"));
+
         // Add a new message to UserInfo + send a new message event
         Message message = new Message();
         message.setFrom(extras.getString("from_user"));
         message.setMessage(extras.getString("message"));
         message.setDatetime(extras.getString("date"));
-
-        int roomId = extras.getInt("room_id");
+        message.setRoom_id(roomId);
 
         // Store the new message to UserInfo
         userInfo.addMessageToRoom(roomId, message);
 
-        Log.i(TAG, "Message received: " + message.getMessage());
+        Log.i(TAG, "Message received: " + message.getMessage() + " with id_room: " + String.valueOf(message.getRoom_id()) + " from: " + message.getFrom());
 
-        if (ChatActivity.isActive() && ChatActivity.getRoomId() == extras.getInt("room_id")) {
-            EventBus messageEvent = CrypTalkerApplication.getMessageEvent();
-            messageEvent.post(message);
+        if (ChatActivity.isActive() && ChatActivity.getRoomId() == roomId) {
+            MessageEvent messageEvent = new MessageEvent(message);
+
+            EventBus.getDefault().post(messageEvent);
         } else {
             sendNotification(message.getMessage());
         }

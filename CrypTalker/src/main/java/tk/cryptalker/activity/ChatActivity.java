@@ -7,9 +7,11 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.VolleyError;
+import de.greenrobot.event.EventBus;
 import tk.cryptalker.R;
 import tk.cryptalker.adapter.ChatListAdapter;
 import tk.cryptalker.application.CrypTalkerApplication;
+import tk.cryptalker.event.MessageEvent;
 import tk.cryptalker.factory.valdiation.ValidationFactory;
 import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Message;
@@ -52,12 +54,8 @@ public class ChatActivity extends AbstractActivity
         makeLayout(R.layout.activity_chat, roomName, R.menu.room);
 
         initView();
-    }
 
-    public void onEvent(Message message)
-    {
-        // Refresh the listView
-        makeList();
+        initEventListener();
     }
 
     private void initView()
@@ -150,18 +148,50 @@ public class ChatActivity extends AbstractActivity
         });
     }
 
+    public void onEvent (MessageEvent event)
+    {
+        // Refresh the listView
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                makeList();
+            }
+        });
+    }
+
+    public void initEventListener()
+    {
+        EventBus.getDefault().register(this);
+    }
+
+    public void destroyEventListener() {
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     public void onResume()
     {
         super.onResume();
+
         active = true;
     }
 
     @Override
-    public void onPause()
+    public void onStop()
     {
-        super.onPause();
         active = false;
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        active = false;
+        destroyEventListener();
+
+        super.onDestroy();
     }
 
     public static boolean isActive() {
