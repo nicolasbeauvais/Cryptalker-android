@@ -1,7 +1,6 @@
 package tk.cryptalker.gcm;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -17,22 +16,15 @@ import de.greenrobot.event.EventBus;
 import tk.cryptalker.R;
 import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.activity.ChatActivity;
-import tk.cryptalker.activity.DashboardActivity;
-import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.event.MessageEvent;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.UserInfo;
 
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;;
 
 public class GcmIntentService extends IntentService
 {
-
-    public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
 
     public GcmIntentService()
     {
@@ -46,6 +38,8 @@ public class GcmIntentService extends IntentService
     {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+
+        Log.i(TAG, "Received GCM");
 
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
