@@ -14,10 +14,13 @@ import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.activity.HomeActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.manager.RequestManager;
+import tk.cryptalker.model.Message;
 import tk.cryptalker.model.Response;
+import tk.cryptalker.model.Room;
 import tk.cryptalker.model.UserInfo;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class StorageFactory {
     private static final String TAG = "StorageFactory";
@@ -132,6 +135,77 @@ public class StorageFactory {
         });
     }
 
+    /**
+     * Get users info and clean merge them to the actual userInfo (because the server can't send us the room's messages)
+     */
+    public static void refreshUserInfo() {
+
+        final Context context = AbstractActivity.getContext();
+
+        // CHeck if we already have userinfos
+        final UserInfo userInfo = CrypTalkerApplication.getUserInfo();
+
+        if (userInfo == null) {
+            getUserInfo();
+            return;
+        }
+
+        RequestManager.getInstance(DashboardActivity.getContext()).getUserInfo(new com.android.volley.Response.Listener<Response>() {
+
+            @Override
+            public void onResponse(Response response) {
+
+                if (response.isSuccess()) {
+
+                    try {
+                        // We store the new user infos
+                        storeUserInfo(response.getData());
+
+                        // We add the message (which are only in the application) to the new userInfo
+                        UserInfo newUserInfo = CrypTalkerApplication.getUserInfo();
+                        ArrayList<Room> newRooms = newUserInfo.getRooms();
+                        ArrayList<Room> oldRooms = userInfo.getRooms();
+
+                        for (int i = 0; i < newRooms.size(); i++) {
+
+                            Room newRoom = newRooms.get(i);
+
+                            int roomId = newRoom.getId();
+
+                            ArrayList<Message> oldMessages = new ArrayList<Message>();
+
+                            for (int j = 0; j < oldRooms.size(); j++) {
+
+                                Room oldRoom = oldRooms.get(j);
+
+                                if (oldRoom.getId() == roomId) {
+                                    oldMessages = oldRoom.getMessages();
+                                }
+                            }
+
+                            newRoom.setMessages(oldMessages);
+                            newRooms.set(i, newRoom);
+                        }
+
+                        newUserInfo.setRooms(newRooms);
+
+                        // Set newUserInfo (with old messages merged) to application
+                        CrypTalkerApplication.setUserInfo(newUserInfo);
+
+                    } catch (JSONException e) {
+                        Log.i(TAG, "JSON Exception on user getUserInfo return parsing");
+                    }
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "Error during the request => " + error.toString());
+            }
+        });
+    }
+
     public static void storeToken(String token) {
 
         final SharedPreferences prefs = getPreferences();
@@ -175,8 +249,6 @@ public class StorageFactory {
             while ((inputString = inputReader.readLine()) != null) {
                 stringBuffer.append(inputString);
             }
-
-            Log.i(TAG, stringBuffer.toString());
 
             try {
                 JSONObject obj = new JSONObject(stringBuffer.toString());

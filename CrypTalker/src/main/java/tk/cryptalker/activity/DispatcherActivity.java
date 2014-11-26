@@ -128,15 +128,20 @@ public class DispatcherActivity extends AbstractActivity
      * the Google Play Store or enable it in the device's system settings.
      */
     private boolean checkPlayServices() {
+
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
         if (resultCode != ConnectionResult.SUCCESS) {
+
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
+
                 Toast.makeText(context, R.string.no_apk, Toast.LENGTH_SHORT).show();
                 finish();
             }
+
             return false;
         }
         return true;
@@ -209,7 +214,6 @@ public class DispatcherActivity extends AbstractActivity
                     }
                 } else {
 
-                    Log.i(TAG, "response fail :(");
                     Log.i(TAG, response.toString());
 
                     Intent intent = new Intent(DispatcherActivity.this, HomeActivity.class);

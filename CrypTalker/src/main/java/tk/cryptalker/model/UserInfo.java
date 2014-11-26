@@ -65,6 +65,10 @@ public class UserInfo
         return rooms;
     }
 
+    public void setRooms(ArrayList<Room> rooms) {
+        this.rooms = rooms;
+    }
+
     public void setRooms(JSONArray rooms)
     {
         if (rooms == null) {

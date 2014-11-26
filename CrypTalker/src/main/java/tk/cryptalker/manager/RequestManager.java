@@ -69,9 +69,9 @@ public class RequestManager
             Log.e(TAG, "An error occurred during requestAbstracter method", e);
         }
 
-        AbstractRequest ar = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), jsonData,
+        AbstractRequest abstractRequest = new AbstractRequest(context, rc.getVerb(), AbstractRequest.makeUrl(rc.getRest()), jsonData,
                 getGenericListener(rc), errorListener);
-        ar.start();
+        abstractRequest.start();
     }
 
     private Listener getGenericListener(final RequestConstructor rc)
