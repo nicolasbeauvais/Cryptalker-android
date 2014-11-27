@@ -2,6 +2,7 @@ package tk.cryptalker.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.UserInfo;
+import tk.cryptalker.util.CryptoUtils;
 
 
 import java.util.ArrayList;
