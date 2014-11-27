@@ -9,6 +9,7 @@
     <color name="light_light_grey">#ffdedede</color>
     <color name="white">#ffffff</color>
     <color name="white_alpha_20">#ccffffff</color>
+    <color name="light_blue">#00C0E5</color>
     <!-- /Attributes -->
 
 
@@ -177,7 +178,7 @@
     </style>
 
     <style name="dashboard_row_name">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">22sp</item>
         <item name="android:color">@color/main</item>
@@ -208,6 +209,8 @@
 
     <!-- Chat -->
     <style name="chat_list" parent="dashboard_list">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
         <item name="android:paddingBottom">60dp</item>
     </style>
     <style name="chat_toolbar_layout">
@@ -231,6 +234,38 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:background">@color/light_light_grey</item>
+    </style>
+
+    <style name="chat_row_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="chat_row_owner_layout" parent="@style/chat_row_layout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">50dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+    <style name="chat_row_other_layout" parent="@style/chat_row_layout">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">50dp</item>
+    </style>
+
+    <style name="message_row">
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="message_row_owner" parent="@style/message_row">
+        <item name="android:layout_gravity">right</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/rounded_text_view</item>
+    </style>
+    <style name="message_row_other" parent="@style/message_row">
+        <item name="android:background">@drawable/rounded_text_view_grey</item>
     </style>
     <!-- /Chat -->
 

@@ -93,7 +93,7 @@ public class ChatActivity extends AbstractActivity
         }
 
         listView = (ListView) findViewById(R.id.list);
-        adapter = new ChatListAdapter(this, messageList);
+        adapter = new ChatListAdapter(this, messageList, userInfo.getUser());
         listView.setAdapter(adapter);
 
         Log.i(TAG, "There is " + String.valueOf(messages.size()) + " messages !");

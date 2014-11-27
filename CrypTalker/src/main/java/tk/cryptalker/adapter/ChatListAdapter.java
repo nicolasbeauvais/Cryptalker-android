@@ -2,12 +2,14 @@ package tk.cryptalker.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import tk.cryptalker.R;
 import tk.cryptalker.model.Message;
+import tk.cryptalker.model.User;
 
 import java.util.List;
 
@@ -18,10 +20,12 @@ public class ChatListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<Message> messages;
+    private User owner;
 
-    public ChatListAdapter(Activity activity, List<Message> messages) {
+    public ChatListAdapter(Activity activity, List<Message> messages, User owner) {
         this.activity = activity;
         this.messages = messages;
+        this.owner = owner;
     }
 
     @Override
@@ -54,7 +58,12 @@ public class ChatListAdapter extends BaseAdapter {
             return null;
         } else {
 
-            convertView = inflater.inflate(R.layout.row_chat, null);
+            if(message.getFrom().equals(owner.getPseudo())) {
+                convertView = inflater.inflate(R.layout.row_chat_owner, null);
+            } else {
+                convertView = inflater.inflate(R.layout.row_chat_other, null);
+            }
+
             TextView messageElement = (TextView) convertView.findViewById(R.id.message);
 
             messageElement.setText(message.getMessage());
