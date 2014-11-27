@@ -2,7 +2,11 @@ package tk.cryptalker.util;
 
 import java.security.MessageDigest;
 
+import android.app.Activity;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import tk.cryptalker.activity.AbstractActivity;
 
 public class CryptoUtils
 {
@@ -34,5 +38,4 @@ public class CryptoUtils
 
         return ret;
     }
-
 }
