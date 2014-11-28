@@ -9,6 +9,7 @@ public class Room
     private boolean isInvite;
     private int invite_id;
     private String lastMessage;
+    private String key;
     private ArrayList<Message> messages;
 
     public int getId() {
@@ -51,11 +52,32 @@ public class Room
         this.lastMessage = lastMessage;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     public ArrayList<Message> getMessages() {
         return messages;
     }
 
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isInvite=" + isInvite +
+                ", invite_id=" + invite_id +
+                ", lastMessage='" + lastMessage + '\'' +
+                ", key='" + key + '\'' +
+                ", messages=" + messages +
+                '}';
     }
 }

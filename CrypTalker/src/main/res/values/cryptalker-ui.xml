@@ -271,6 +271,17 @@
     <style name="message_row_other" parent="@style/message_row">
         <item name="android:background">@drawable/rounded_text_view_grey</item>
     </style>
+    <style name="message_pending">
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="message_fail" parent="message_pending">
+        <item name="android:color">@color/red</item>
+    </style>
     <!-- /Chat -->
 
 </resources>

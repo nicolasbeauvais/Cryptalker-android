@@ -83,6 +83,8 @@
     <!-- activity_chat -->
     <string name="chat_new_message">Enter your text here</string>
     <string name="chat_new_message_send">Send a new message</string>
+    <string name="chat_new_message_pending">Sending…</string>
+    <string name="chat_new_message_fail">Failure! click to try sending again</string>
     <!-- /activity_chat -->
 
     <!-- Parameters -->

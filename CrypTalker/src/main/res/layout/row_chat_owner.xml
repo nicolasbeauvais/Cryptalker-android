@@ -5,7 +5,18 @@
 
     <TextView
             android:id="@+id/message"
-            style="@style/message_row_owner"
-            />
+            style="@style/message_row_owner"/>
+
+    <TextView
+            android:id="@+id/pending"
+            style="@style/message_pending"
+            android:visibility="gone"
+            android:text="@string/chat_new_message_pending"/>
+
+    <TextView
+            android:id="@+id/fail"
+            style="@style/message_fail"
+            android:visibility="gone"
+            android:text="@string/chat_new_message_fail"/>
 
 </LinearLayout>

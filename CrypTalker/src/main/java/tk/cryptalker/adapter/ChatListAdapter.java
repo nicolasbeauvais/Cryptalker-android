@@ -68,6 +68,19 @@ public class ChatListAdapter extends BaseAdapter {
 
             messageElement.setText(message.getMessage());
 
+            Log.i(TAG, message.toString());
+
+            if (message.isFail()) {
+                TextView fail = (TextView) convertView.findViewById(R.id.fail);
+                fail.setVisibility(View.VISIBLE);
+            } else if (message.isPending()) {
+
+                TextView pending = (TextView) convertView.findViewById(R.id.pending);
+                pending.setVisibility(View.VISIBLE);
+            }
+
+            //Log.i(TAG, message.toString());
+
             return convertView;
         }
     }

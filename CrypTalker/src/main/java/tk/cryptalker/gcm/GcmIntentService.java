@@ -16,6 +16,7 @@ import de.greenrobot.event.EventBus;
 import tk.cryptalker.R;
 import tk.cryptalker.activity.AbstractActivity;
 import tk.cryptalker.activity.ChatActivity;
+import tk.cryptalker.activity.DashboardActivity;
 import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.event.MessageEvent;
 import tk.cryptalker.model.Message;
@@ -78,7 +79,7 @@ public class GcmIntentService extends IntentService
         int notificationId = 001;
 
         // Build intent for notification content
-        Intent viewIntent = new Intent(this, ChatActivity.class);
+        Intent viewIntent = new Intent(this, DashboardActivity.class);
         PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -102,7 +103,6 @@ public class GcmIntentService extends IntentService
 
         if (!isScreenOn)
         {
-
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK |PowerManager.ACQUIRE_CAUSES_WAKEUP |PowerManager.ON_AFTER_RELEASE, "MyLock");
 
             wl.acquire(10000);

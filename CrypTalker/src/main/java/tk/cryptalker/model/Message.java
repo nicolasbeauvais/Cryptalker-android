@@ -1,17 +1,39 @@
 package tk.cryptalker.model;
 
+import android.util.Base64;
+import tk.cryptalker.util.AESUtil;
+
 public class Message
 {
     private String message;
     private String from;
     private String datetime;
     private int room_id;
+    private boolean pending;
+    private boolean fail;
 
-    public String getMessage() {
-        return message;
+    public Message()
+    {
+        this.pending = false;
+        this.fail = false;
     }
 
-    public void setMessage(String message) {
+    public String getMessage()
+    {
+        try {
+
+            byte[] cipherData = AESUtil.decrypt(Base64.decode(message, Base64.DEFAULT));
+
+            return new String(cipherData, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void setMessage(String message)
+    {
         this.message = message;
     }
 
@@ -39,6 +61,22 @@ public class Message
         this.datetime = datetime;
     }
 
+    public boolean isPending() {
+        return pending;
+    }
+
+    public void setPending(boolean pending) {
+        this.pending = pending;
+    }
+
+    public boolean isFail() {
+        return fail;
+    }
+
+    public void setFail(boolean fail) {
+        this.fail = fail;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -46,6 +84,8 @@ public class Message
                 ", from='" + from + '\'' +
                 ", datetime='" + datetime + '\'' +
                 ", room_id=" + room_id +
+                ", pending=" + pending +
+                ", fail=" + fail +
                 '}';
     }
 }

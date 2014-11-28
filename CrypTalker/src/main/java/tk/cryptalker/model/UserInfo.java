@@ -1,5 +1,6 @@
 package tk.cryptalker.model;
 
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 
 public class UserInfo
 {
+    private static final String TAG = "UserInfo";
+
     private User user = new User();
     private ArrayList<Room> friendRequestReceived = new ArrayList<Room>();
     private ArrayList<Room> rooms = new ArrayList<Room>();
@@ -123,8 +126,10 @@ public class UserInfo
         return null;
     }
 
-    public void addMessageToRoom(int roomId, Message message)
+    public int addMessageToRoom(int roomId, Message message)
     {
+        message.setRoom_id(roomId);
+
         for (int i = 0; i < rooms.size(); i++) {
             Room room = rooms.get(i);
 
@@ -135,14 +140,51 @@ public class UserInfo
                 room.setMessages(roomMessages);
 
                 rooms.set(i, room);
+
+                commit();
+
+                return roomMessages.size() - 1;
             }
         }
 
-        commit();
+        return 0;
+    }
+
+    public void setSuccessMessage(int roomId, int messageId)
+    {
+        for (Room room : rooms) {
+            if (room.getId() == roomId) {
+
+                ArrayList<Message> roomMessages = room.getMessages();
+                Message message = roomMessages.get(messageId);
+
+                message.setPending(false);
+                message.setFail(false);
+
+                commit();
+            }
+        }
+    }
+
+    public void setFailedMessage(int roomId, int messageId)
+    {
+        for (Room room : rooms) {
+            if (room.getId() == roomId) {
+
+                ArrayList<Message> roomMessages = room.getMessages();
+                Message message = roomMessages.get(messageId);
+
+                message.setPending(false);
+                message.setFail(true);
+
+                commit();
+            }
+        }
     }
 
     private void commit()
     {
         CrypTalkerApplication.commitUserInfo();
+        CrypTalkerApplication.setUserInfo(this);
     }
 }

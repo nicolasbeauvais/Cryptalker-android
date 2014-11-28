@@ -1,8 +1,8 @@
 package tk.cryptalker.activity;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,8 +18,7 @@ import tk.cryptalker.manager.RequestManager;
 import tk.cryptalker.model.Message;
 import tk.cryptalker.model.Response;
 import tk.cryptalker.model.UserInfo;
-import tk.cryptalker.util.CryptoUtils;
-
+import tk.cryptalker.util.AESUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,10 +97,8 @@ public class ChatActivity extends AbstractActivity
         adapter = new ChatListAdapter(this, messageList, userInfo.getUser());
         listView.setAdapter(adapter);
 
-        Log.i(TAG, "There is " + String.valueOf(messages.size()) + " messages !");
-
-        for (Message message1 : messages) {
-            messageList.add(message1);
+        for (Message message : messages) {
+            messageList.add(message);
         }
 
         adapter.notifyDataSetChanged();
@@ -109,12 +106,23 @@ public class ChatActivity extends AbstractActivity
 
     private Message fillValues()
     {
-        Message newMessage = new Message();
-        newMessage.setRoom_id(roomId);
-        newMessage.setMessage(message.getText().toString());
-        newMessage.setFrom(CrypTalkerApplication.getUserInfo().getUser().getPseudo());
+        // Encrypt message
+        try {
 
-        return newMessage;
+            byte[] cipherData = AESUtil.encrypt(message.getText().toString());
+            String base64Text = Base64.encodeToString(cipherData, Base64.DEFAULT);
+
+            Message newMessage = new Message();
+            newMessage.setRoom_id(roomId);
+            newMessage.setMessage(base64Text);
+            newMessage.setFrom(CrypTalkerApplication.getUserInfo().getUser().getPseudo());
+
+            return newMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private void resetInput()
@@ -124,8 +132,9 @@ public class ChatActivity extends AbstractActivity
 
     private void sendMessage(final Message message) {
 
-        // If the request fail the message is still displayed :(
-        CrypTalkerApplication.getUserInfo().addMessageToRoom(roomId, message);
+        message.setPending(true);
+        final int messageId = CrypTalkerApplication.getUserInfo().addMessageToRoom(roomId, message);
+
         makeList();
         resetInput();
 
@@ -136,10 +145,20 @@ public class ChatActivity extends AbstractActivity
 
                 if (!response.isSuccess()) {
 
+                    // Message status to fail
+                    CrypTalkerApplication.getUserInfo().setFailedMessage(roomId, messageId);
+                    makeList();
+
                     if (response.getErrors().length() > 0) {
                         ValidationFactory.parseJsonErrors(response.getErrors(), ChatActivity.this);
                     }
+                } else {
+                    // Remove pending status (succes)
+                    CrypTalkerApplication.getUserInfo().setSuccessMessage(roomId, messageId);
+                    makeList();
                 }
+
+
             }
         }, new com.android.volley.Response.ErrorListener() {
 
