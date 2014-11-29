@@ -14,11 +14,10 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class AESUtil
 {
-	private static String key = "a8ffc7g56311634f47b6fc91aa77aa6b";
 
 	private static byte[] ivBytes = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-	public static byte[] encrypt(String text)
+	public static byte[] encrypt(String text, String key)
 			throws java.io.UnsupportedEncodingException,
 			NoSuchAlgorithmException,
 			NoSuchPaddingException,
@@ -38,7 +37,7 @@ public class AESUtil
 		return cipher.doFinal(textBytes);
 	}
 
-	public static byte[] decrypt(byte[] textBytes)
+	public static byte[] decrypt(byte[] textBytes, String key)
 			throws java.io.UnsupportedEncodingException,
 			NoSuchAlgorithmException,
 			NoSuchPaddingException,

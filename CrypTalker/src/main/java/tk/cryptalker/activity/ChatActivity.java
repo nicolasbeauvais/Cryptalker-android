@@ -106,10 +106,13 @@ public class ChatActivity extends AbstractActivity
 
     private Message fillValues()
     {
+        Log.i(TAG, CrypTalkerApplication.getUserInfo().getRoomById(roomId).toString());
+
         // Encrypt message
         try {
 
-            byte[] cipherData = AESUtil.encrypt(message.getText().toString());
+            String key = CrypTalkerApplication.getUserInfo().getRoomById(roomId).getKey();
+            byte[] cipherData = AESUtil.encrypt(message.getText().toString(), key);
             String base64Text = Base64.encodeToString(cipherData, Base64.DEFAULT);
 
             Message newMessage = new Message();

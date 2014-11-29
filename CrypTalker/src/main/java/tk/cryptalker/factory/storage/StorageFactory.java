@@ -22,7 +22,9 @@ import tk.cryptalker.model.UserInfo;
 import java.io.*;
 import java.util.ArrayList;
 
-public class StorageFactory {
+public class StorageFactory
+{
+
     private static final String TAG = "StorageFactory";
     private static final String P_APP_VERSION = "appVersion";
     public static final String P_REG_ID = "registration_id";
@@ -112,6 +114,8 @@ public class StorageFactory {
 
                     try {
                         storeUserInfo(response.getData());
+
+                        Log.i(TAG, response.getData().toString());
 
                         Intent intent = new Intent(context, DashboardActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

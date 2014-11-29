@@ -86,6 +86,7 @@ public class UserInfo
 
                 room.setId(obj.getInt("id"));
                 room.setName(obj.getString("name"));
+                room.setKey(obj.getString("key"));
 
                 JSONArray arrayMessages = obj.getJSONArray("messages");
                 ArrayList<Message> messages = new ArrayList<Message>();
@@ -111,6 +112,19 @@ public class UserInfo
                 e.printStackTrace();
             }
         }
+    }
+
+    public Room getRoomById(int id)
+    {
+        for (int i = 0; i < rooms.size(); i++) {
+            Room room = rooms.get(i);
+
+            if (room.getId() == id) {
+                return room;
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<Message> getMessagesByRoomId(int id)

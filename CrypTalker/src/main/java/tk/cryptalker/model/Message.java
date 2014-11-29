@@ -1,6 +1,7 @@
 package tk.cryptalker.model;
 
 import android.util.Base64;
+import tk.cryptalker.application.CrypTalkerApplication;
 import tk.cryptalker.util.AESUtil;
 
 public class Message
@@ -22,7 +23,8 @@ public class Message
     {
         try {
 
-            byte[] cipherData = AESUtil.decrypt(Base64.decode(message, Base64.DEFAULT));
+            String key = CrypTalkerApplication.getUserInfo().getRoomById(room_id).getKey();
+            byte[] cipherData = AESUtil.decrypt(Base64.decode(message, Base64.DEFAULT), key);
 
             return new String(cipherData, "UTF-8");
         } catch (Exception e) {
