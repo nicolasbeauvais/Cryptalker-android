@@ -28,7 +28,7 @@ public class AddFriendDialogFragment extends DialogFragment
 {
     private static final String TAG = "AddFriendDialogFragment";
 
-    private Activity activity;
+    private final Activity activity;
     private AlertDialog dialog;
     private EditText pseudo;
     private ArrayList<TextView> inputs = new ArrayList<TextView>();
@@ -38,15 +38,10 @@ public class AddFriendDialogFragment extends DialogFragment
         this.activity = getActivity();
     }
 
-    public AddFriendDialogFragment(Activity activity)
-    {
-        this.activity = activity;
-    }
-
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
 
         View inflateView = inflater.inflate(R.layout.dialog_add_friend, null);
 
@@ -82,7 +77,7 @@ public class AddFriendDialogFragment extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                if (ValidationFactory.validation(inputs, getActivity().getBaseContext())) {
+                if (ValidationFactory.validation(inputs, activity.getBaseContext())) {
                     Friend friend = fillValues();
                     addFriend(friend);
                 }
@@ -100,14 +95,14 @@ public class AddFriendDialogFragment extends DialogFragment
 
     private void addFriend(final Friend friend){
 
-        RequestManager.getInstance(getActivity()).addFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
+        RequestManager.getInstance(activity).addFriendRequest(friend, new com.android.volley.Response.Listener<Response>() {
 
             @Override
             public void onResponse(Response response) {
 
                 if (response.isSuccess()) {
                     dismiss();
-                    Toast.makeText(getActivity(), R.string.dialog_add_friend_success, Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, R.string.dialog_add_friend_success, Toast.LENGTH_LONG).show();
                 } else {
 
                     if (response.getErrors().length() > 0) {

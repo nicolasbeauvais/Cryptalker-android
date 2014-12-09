@@ -98,7 +98,7 @@ public class DashboardActivity extends AbstractActivity
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
 
-                        AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment(DashboardActivity.this);
+                        AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment();
                         addFriendDialogFragment.show(getFragmentManager(), "AddFriendDialogFragment");
 
                         return true;
