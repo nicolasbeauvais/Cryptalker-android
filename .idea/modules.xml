@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CrypTalker.iml" filepath="$PROJECT_DIR$/CrypTalker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cryptalker.iml" filepath="$PROJECT_DIR$/cryptalker.iml" />
     </modules>
   </component>
 </project>
