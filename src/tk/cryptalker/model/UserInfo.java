@@ -99,6 +99,7 @@ public class UserInfo
                     message.setMessage(objMessage.getString("message"));
                     message.setFrom(objMessage.getString("from"));
                     message.setDatetime(objMessage.optString("datetime"));
+                    message.setRoom_id(objMessage.optInt("room_id"));
 
                     messages.add(message);
                 }
